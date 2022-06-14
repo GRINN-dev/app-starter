@@ -1,6 +1,6 @@
 import { LogoIcon } from "@grinn/icons";
 import { FC } from "react";
-import { Button, Card, Typography } from "..";
+import { Button, Card, Typography } from "@grinn/components";
 import { LoginFormProps } from "./";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";

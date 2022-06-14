@@ -24,6 +24,7 @@ export const sendEmail: Task = async payload => {
     })
     .catch((error: any) => {
       console.error(error);
+      throw new Error("Email sending failed");
     });
   if (isDev) {
     console.log(mailData.subject, mailData.dynamicTemplateData);

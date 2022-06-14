@@ -8,6 +8,13 @@
           "omit": "update,create,delete",
           "simpleCollections": "only"
         }
+      },
+      "publ.tests": {
+        "description": "ma table de tests",
+        "tags": {
+          "omit": "update,create,delete",
+          "simpleCollections": "both"
+        }
       }
     },
     "procedure": {}

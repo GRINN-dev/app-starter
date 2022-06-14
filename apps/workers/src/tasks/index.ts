@@ -5,6 +5,7 @@ import { userForgotPassword } from "./user_forgot_password";
 import { userAudit } from "./user_audit";
 import { generatePdfFiles } from "./generate_pdf_files";
 import { log } from "./log";
+import { sendTestCreationEmail } from "./send_test_creation_email";
 
 export {
   sendEmail,
@@ -14,4 +15,5 @@ export {
   userAudit,
   generatePdfFiles,
   log,
+  sendTestCreationEmail,
 };

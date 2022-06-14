@@ -94,6 +94,40 @@ export type ChuckNorrisJokeCategory = {
   category?: InputMaybe<Scalars['String']>;
 };
 
+/** All input for the `createTest` mutation. */
+export type CreateTestInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  testString?: InputMaybe<Scalars['String']>;
+  userId?: InputMaybe<Scalars['UUID']>;
+};
+
+/** The output of our `createTest` mutation. */
+export type CreateTestPayload = {
+  __typename?: 'CreateTestPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  test?: Maybe<Test>;
+  /** An edge for our `Test`. May be used by Relay 1. */
+  testEdge?: Maybe<TestsEdge>;
+  /** Reads a single `User` that is related to this `Test`. */
+  user?: Maybe<User>;
+};
+
+
+/** The output of our `createTest` mutation. */
+export type CreateTestPayloadTestEdgeArgs = {
+  orderBy?: InputMaybe<Array<TestsOrderBy>>;
+};
+
 /** All input for the create `User` mutation. */
 export type CreateUserInput = {
   /**
@@ -219,6 +253,7 @@ export type LogPayload = {
 export type Mutation = {
   __typename?: 'Mutation';
   authenticate?: Maybe<AuthenticatePayload>;
+  createTest?: Maybe<CreateTestPayload>;
   /** Creates a single `User`. */
   createUser?: Maybe<CreateUserPayload>;
   /** Deletes a single `User` using a unique key. */
@@ -240,6 +275,12 @@ export type Mutation = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationAuthenticateArgs = {
   input: AuthenticateInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreateTestArgs = {
+  input: CreateTestInput;
 };
 
 
@@ -324,6 +365,12 @@ export type Query = {
    * which can only query top level fields if they are in a particular form.
    */
   query: Query;
+  selectUsersNamedLouis?: Maybe<User>;
+  test?: Maybe<Test>;
+  /** Reads and enables pagination through a set of `Test`. */
+  tests?: Maybe<TestsConnection>;
+  /** Reads a set of `Test`. */
+  testsList?: Maybe<Array<Test>>;
   user?: Maybe<User>;
   userEmail?: Maybe<UserEmail>;
   userEmailByUserIdAndEmail?: Maybe<UserEmail>;
@@ -337,6 +384,35 @@ export type Query = {
 /** The root query type which gives access points into the data universe. */
 export type QueryGetChuckNorrisJokeByCategoryArgs = {
   input?: InputMaybe<ChuckNorrisJokeCategory>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryTestArgs = {
+  id: Scalars['UUID'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryTestsArgs = {
+  after?: InputMaybe<Scalars['Cursor']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  condition?: InputMaybe<TestCondition>;
+  filter?: InputMaybe<TestFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<TestsOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryTestsListArgs = {
+  condition?: InputMaybe<TestCondition>;
+  filter?: InputMaybe<TestFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<TestsOrderBy>>;
 };
 
 
@@ -432,6 +508,157 @@ export type ResetPasswordPayload = {
   query?: Maybe<Query>;
 };
 
+/** A filter to be used against String fields. All fields are combined with a logical ‘and.’ */
+export type StringFilter = {
+  /** Not equal to the specified value, treating null like an ordinary value. */
+  distinctFrom?: InputMaybe<Scalars['String']>;
+  /** Not equal to the specified value, treating null like an ordinary value (case-insensitive). */
+  distinctFromInsensitive?: InputMaybe<Scalars['String']>;
+  /** Ends with the specified string (case-sensitive). */
+  endsWith?: InputMaybe<Scalars['String']>;
+  /** Ends with the specified string (case-insensitive). */
+  endsWithInsensitive?: InputMaybe<Scalars['String']>;
+  /** Equal to the specified value. */
+  equalTo?: InputMaybe<Scalars['String']>;
+  /** Equal to the specified value (case-insensitive). */
+  equalToInsensitive?: InputMaybe<Scalars['String']>;
+  /** Greater than the specified value. */
+  greaterThan?: InputMaybe<Scalars['String']>;
+  /** Greater than the specified value (case-insensitive). */
+  greaterThanInsensitive?: InputMaybe<Scalars['String']>;
+  /** Greater than or equal to the specified value. */
+  greaterThanOrEqualTo?: InputMaybe<Scalars['String']>;
+  /** Greater than or equal to the specified value (case-insensitive). */
+  greaterThanOrEqualToInsensitive?: InputMaybe<Scalars['String']>;
+  /** Included in the specified list. */
+  in?: InputMaybe<Array<Scalars['String']>>;
+  /** Included in the specified list (case-insensitive). */
+  inInsensitive?: InputMaybe<Array<Scalars['String']>>;
+  /** Contains the specified string (case-sensitive). */
+  includes?: InputMaybe<Scalars['String']>;
+  /** Contains the specified string (case-insensitive). */
+  includesInsensitive?: InputMaybe<Scalars['String']>;
+  /** Is null (if `true` is specified) or is not null (if `false` is specified). */
+  isNull?: InputMaybe<Scalars['Boolean']>;
+  /** Less than the specified value. */
+  lessThan?: InputMaybe<Scalars['String']>;
+  /** Less than the specified value (case-insensitive). */
+  lessThanInsensitive?: InputMaybe<Scalars['String']>;
+  /** Less than or equal to the specified value. */
+  lessThanOrEqualTo?: InputMaybe<Scalars['String']>;
+  /** Less than or equal to the specified value (case-insensitive). */
+  lessThanOrEqualToInsensitive?: InputMaybe<Scalars['String']>;
+  /** Matches the specified pattern (case-sensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters. */
+  like?: InputMaybe<Scalars['String']>;
+  /** Matches the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters. */
+  likeInsensitive?: InputMaybe<Scalars['String']>;
+  /** Equal to the specified value, treating null like an ordinary value. */
+  notDistinctFrom?: InputMaybe<Scalars['String']>;
+  /** Equal to the specified value, treating null like an ordinary value (case-insensitive). */
+  notDistinctFromInsensitive?: InputMaybe<Scalars['String']>;
+  /** Does not end with the specified string (case-sensitive). */
+  notEndsWith?: InputMaybe<Scalars['String']>;
+  /** Does not end with the specified string (case-insensitive). */
+  notEndsWithInsensitive?: InputMaybe<Scalars['String']>;
+  /** Not equal to the specified value. */
+  notEqualTo?: InputMaybe<Scalars['String']>;
+  /** Not equal to the specified value (case-insensitive). */
+  notEqualToInsensitive?: InputMaybe<Scalars['String']>;
+  /** Not included in the specified list. */
+  notIn?: InputMaybe<Array<Scalars['String']>>;
+  /** Not included in the specified list (case-insensitive). */
+  notInInsensitive?: InputMaybe<Array<Scalars['String']>>;
+  /** Does not contain the specified string (case-sensitive). */
+  notIncludes?: InputMaybe<Scalars['String']>;
+  /** Does not contain the specified string (case-insensitive). */
+  notIncludesInsensitive?: InputMaybe<Scalars['String']>;
+  /** Does not match the specified pattern (case-sensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters. */
+  notLike?: InputMaybe<Scalars['String']>;
+  /** Does not match the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters. */
+  notLikeInsensitive?: InputMaybe<Scalars['String']>;
+  /** Does not start with the specified string (case-sensitive). */
+  notStartsWith?: InputMaybe<Scalars['String']>;
+  /** Does not start with the specified string (case-insensitive). */
+  notStartsWithInsensitive?: InputMaybe<Scalars['String']>;
+  /** Starts with the specified string (case-sensitive). */
+  startsWith?: InputMaybe<Scalars['String']>;
+  /** Starts with the specified string (case-insensitive). */
+  startsWithInsensitive?: InputMaybe<Scalars['String']>;
+};
+
+/** ma table de tests */
+export type Test = {
+  __typename?: 'Test';
+  createdAt: Scalars['Datetime'];
+  id: Scalars['UUID'];
+  testString: Scalars['String'];
+  updatedAt: Scalars['Datetime'];
+  /** Reads a single `User` that is related to this `Test`. */
+  user?: Maybe<User>;
+  userId: Scalars['UUID'];
+};
+
+/** A condition to be used against `Test` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export type TestCondition = {
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['UUID']>;
+  /** Checks for equality with the object’s `testString` field. */
+  testString?: InputMaybe<Scalars['String']>;
+  /** Checks for equality with the object’s `userId` field. */
+  userId?: InputMaybe<Scalars['UUID']>;
+};
+
+/** A filter to be used against `Test` object types. All fields are combined with a logical ‘and.’ */
+export type TestFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<TestFilter>>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<UuidFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<TestFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<TestFilter>>;
+  /** Filter by the object’s `testString` field. */
+  testString?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `userId` field. */
+  userId?: InputMaybe<UuidFilter>;
+};
+
+/** A connection to a list of `Test` values. */
+export type TestsConnection = {
+  __typename?: 'TestsConnection';
+  /** A list of edges which contains the `Test` and cursor to aid in pagination. */
+  edges: Array<TestsEdge>;
+  /** A list of `Test` objects. */
+  nodes: Array<Test>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Test` you could get from the connection. */
+  totalCount: Scalars['Int'];
+};
+
+/** A `Test` edge in the connection. */
+export type TestsEdge = {
+  __typename?: 'TestsEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']>;
+  /** The `Test` at the end of the edge. */
+  node: Test;
+};
+
+/** Methods to use when ordering `Test`. */
+export enum TestsOrderBy {
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  TestStringAsc = 'TEST_STRING_ASC',
+  TestStringDesc = 'TEST_STRING_DESC',
+  UserIdAsc = 'USER_ID_ASC',
+  UserIdDesc = 'USER_ID_DESC'
+}
+
 /** A filter to be used against UUID fields. All fields are combined with a logical ‘and.’ */
 export type UuidFilter = {
   /** Not equal to the specified value, treating null like an ordinary value. */
@@ -501,6 +728,7 @@ export type User = {
   createdAt: Scalars['Datetime'];
   /** Public-facing firstname of the user. */
   firstName: Scalars['String'];
+  fullName?: Maybe<Scalars['String']>;
   hasPassword?: Maybe<Scalars['Boolean']>;
   /** Unique identifier for the user. */
   id: Scalars['UUID'];
@@ -509,9 +737,36 @@ export type User = {
   isVerified: Scalars['Boolean'];
   /** Public-facing lastname of the user. */
   lastName: Scalars['String'];
+  /** Reads and enables pagination through a set of `Test`. */
+  tests: TestsConnection;
+  /** Reads and enables pagination through a set of `Test`. */
+  testsList: Array<Test>;
   updatedAt: Scalars['Datetime'];
   /** Reads and enables pagination through a set of `UserEmail`. */
   userEmailsList: Array<UserEmail>;
+};
+
+
+/** A user who can log in to the application. */
+export type UserTestsArgs = {
+  after?: InputMaybe<Scalars['Cursor']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  condition?: InputMaybe<TestCondition>;
+  filter?: InputMaybe<TestFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<TestsOrderBy>>;
+};
+
+
+/** A user who can log in to the application. */
+export type UserTestsListArgs = {
+  condition?: InputMaybe<TestCondition>;
+  filter?: InputMaybe<TestFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<TestsOrderBy>>;
 };
 
 
@@ -592,6 +847,8 @@ export enum UserEmailsOrderBy {
 export type UserFilter = {
   /** Checks for all expressions in this list. */
   and?: InputMaybe<Array<UserFilter>>;
+  /** Filter by the object’s `fullName` field. */
+  fullName?: InputMaybe<StringFilter>;
   /** Filter by the object’s `hasPassword` field. */
   hasPassword?: InputMaybe<BooleanFilter>;
   /** Filter by the object’s `id` field. */

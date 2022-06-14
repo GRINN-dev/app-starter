@@ -7,6 +7,7 @@ import {
   userAudit,
   generatePdfFiles,
   log,
+  sendTestCreationEmail,
 } from "./tasks";
 
 const main = async () => {
@@ -24,6 +25,7 @@ const main = async () => {
       user_audit: userAudit,
       log: log,
       generate_pdf_files: generatePdfFiles,
+      send_test_creation_email: sendTestCreationEmail,
     },
   });
   await runner.promise;
