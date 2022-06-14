@@ -69,7 +69,7 @@
     "!afterReset.sql",
     {
       "_": "command",
-      "command": "echo $GM_DBURL "
+      "command": "DATABASE_URL=$GM_DBURL && node -r ../../@grinn/config/env.js ./node_modules/.bin/graphile-worker --schema-only"
     }
   ],
 

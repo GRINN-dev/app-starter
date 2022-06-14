@@ -2,7 +2,7 @@
 
 📚[Documentation](https://www.graphile.org/postgraphile/usage-library/)
 
-# Monorepo
+## Monorepo
 
 Objectif : installer un serveur postgraphile pour générer une API graphQL.
 
@@ -51,7 +51,7 @@ Scripts :
 
 ### Arborescence de l’app
 
-```
+```bash
 apps/
 ├─ server/
 │  ├─ src/
@@ -78,7 +78,7 @@ const postgraphileOptions: PostGraphileOptions = {
 export const installPostgraphile = (app: Express) => {
   app.use(
     postgraphile(process.env.DATABASE_URL, "publ", postgraphileOptions)
-		// 1st param : link to database
+  // 1st param : link to database
     // 2nd param : schema
     // 3rd param (object) : options
   );
@@ -146,7 +146,7 @@ makeApp().listen(PORT, () => {
 });
 ```
 
-### Chronologie des commandes :
+### Chronologie des commandes
 
 - `yarn workspace server build --watch` (génère un fichier **dist/index.js**)
 - `yarn workspace server dev` (exécute le fichier généré - lance le serveur postgraphile)
