@@ -1,0 +1,26 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "Stmt123456",
+      "Effect": "Allow",
+      "Action": ["s3:ListAllMyBuckets"],
+      "Principal": "*",
+      "Resource": ["arn:aws:s3:::*"]
+    },
+    {
+      "Sid": "Stmt123457",
+      "Effect": "Allow",
+      "Action": [
+        "s3:ListBucket",
+        "s3:GetBucketLocation",
+        "s3:GetObject",
+        "s3:PutObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::test-grinn",
+        "arn:aws:s3:::test-grinn/*"
+      ]
+    }
+  ]
+}

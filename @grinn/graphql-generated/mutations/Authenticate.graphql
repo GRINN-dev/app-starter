@@ -1,0 +1,5 @@
+mutation Authenticate($input: AuthenticateInput!) {
+  authenticate(input: $input) {
+    jwt
+  }
+}

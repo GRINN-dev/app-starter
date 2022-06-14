@@ -1,0 +1,9 @@
+{
+  "extends": "@grinn/config/tsConfig/react-library.json",
+  "include": ["./icons"],
+  "exclude": ["dist", "node_modules"],
+  "compilerOptions": {
+    "rootDir": "icons",
+    "outDir": "dist"
+  }
+}

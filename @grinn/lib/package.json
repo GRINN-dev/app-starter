@@ -1,0 +1,21 @@
+{
+  "name": "@grinn/lib",
+  "version": "0.0.1",
+  "private": true,
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "yarn tsc",
+    "watch": "yarn tsc --watch",
+    "dev": "yarn tsc --watch --preserveWatchOutput"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.6.4",
+    "@grinn/config": "*",
+    "@grinn/graphql-generated": "*",
+    "next": "^12.1.6",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-image-file-resizer": "^0.4.8"
+  }
+}

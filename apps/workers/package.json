@@ -1,0 +1,31 @@
+{
+  "name": "workers",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/intl": "^1.2.0",
+    "@types/intl-locales-supported": "^1.0.7",
+    "nodemon": "^2.0.16",
+    "typescript": "^4.6.4"
+  },
+  "scripts": {
+    "gw": "node -r ../../@grinn/config/env.js ./node_modules/.bin/graphile-worker --crontab ./crontab",
+    "build": "tsc",
+    "install-db-schema": "yarn gw --schema-only",
+    "start": "node -r ../../@grinn/config/env.js dist/index.js",
+    "dev": "concurrently --names \"WATCH,TSC\" --prefix \"({name})\" --prefix-colors \"yellow.bold,cyan.bold\" \"nodemon -r ../../@grinn/config/env.js dist/index.js --delay 1 --quiet\" \"yarn tsc --watch --preserveWatchOutput\""
+  },
+  "dependencies": {
+    "@sendgrid/mail": "^7.6.2",
+    "axios": "^0.27.2",
+    "chalk": "^4.1.0",
+    "concurrently": "^7.2.0",
+    "graphile-worker": "^0.13.0",
+    "handlebars": "^4.7.7",
+    "intl": "^1.2.5",
+    "intl-locales-supported": "^1.8.12",
+    "moment": "^2.29.3",
+    "puppeteer": "^14.1.0"
+  }
+}

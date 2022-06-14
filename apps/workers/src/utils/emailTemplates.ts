@@ -1,0 +1,10 @@
+export const USER_SEND_ATTESTATION = "d-cf46d44e5a03475e9df05619fa95a0e9";
+export const ADMIN_ATTESTATION_VALIDATION =
+  "d-0ecace8c2d2d41cc9812f7e5b91e1276";
+export const VERIFY_EMAIL_ADDRESS = "d-40f2a1bcc0f14d8e89e0a1d4efabe7b0";
+export const USER_FORGOT_PASSWORD = "d-8a6b2cbaa9c54321b3424610f796f9a7";
+export const USER_AUDIT = "d-692564d2af4c4ec793d4b56b3d94f7e2";
+export const USER_FORGOT_PASSWORD_UNREGISTERED_EMAIL =
+  "d-ac830a9a2c9f4fabac7fd45159e1a109";
+
+export const USER_REFUSE_ATTESTATION = "d-97909cf422bd4b2aa199cc93a0deb6db";

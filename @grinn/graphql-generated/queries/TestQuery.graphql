@@ -1,0 +1,6 @@
+query TestQuery($id: UUID!) {
+  user(id: $id) {
+    id
+    firstName
+  }
+}

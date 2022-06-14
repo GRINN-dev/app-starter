@@ -1,0 +1,46 @@
+{
+  "name": "turborepo-basic-npm",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "@grinn/*"
+  ],
+  "scripts": {
+    "postbuild": "yarn server build && yarn gw build",
+    "start": "yarn server start",
+    "build": "yarn turbo run build",
+    "dev": "yarn workspace @grinn/icons build && yarn workspace @grinn/styles build && turbo run dev --parallel",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "components": "yarn workspace @grinn/components",
+    "gg": "yarn workspace @grinn/graphql-generated",
+    "lib": "yarn workspace @grinn/lib",
+    "install:db": "yarn && node -r ./@grinn/config/env.js scripts/installdb",
+    "gm": "yarn workspace db gm",
+    "gw": "yarn workspace workers",
+    "server": "yarn workspace server",
+    "codegen": "graphql-codegen --config codegen.yml",
+    "deploy:public-site": "yarn && yarn components build && yarn gg build && yarn lib build && yarn workspace public-site build && yarn workspace public-site start"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.0",
+    "install": "^0.13.0",
+    "pg": "^8.7.1",
+    "prettier": "^2.5.1",
+    "turbo": "*",
+    "webpack": "^5.68.0"
+  },
+  "packageManager": "yarn@1.22.17",
+  "dependencies": {
+    "vercel": "^24.0.0"
+  },
+  "main": "index.js",
+  "repository": "https://github.com/xxx",
+  "author": "",
+  "license": "MIT",
+  "resolutions": {
+    "graphql": "15.x",
+    "pg-connection-string": "2.x"
+  }
+}

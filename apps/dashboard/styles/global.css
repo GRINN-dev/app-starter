@@ -1,0 +1,12 @@
+@font-face {
+  font-family: "ApfelGrotezk";
+  src: local("ApfelGrotezk"),
+    url(../public/fonts/ApfelGrotezk-Regular.woff2) format("woff2"),
+    url(../public/fonts/ApfelGrotezk-Regular.woff) format("woff");
+}
+@font-face {
+  font-family: "ApfelGrotezk Fett";
+  src: local("ApfelGrotezk Fett"),
+    url(../public/fonts/ApfelGrotezk-Fett.woff2) format("woff2"),
+    url(../public/fonts/ApfelGrotezk-Fett.woff) format("woff");
+}
