@@ -32,6 +32,11 @@ export type Scalars = {
   UUID: any;
 };
 
+export type AuthenticateForRefreshInput = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
 /** All input for the `authenticate` mutation. */
 export type AuthenticateInput = {
   /**
@@ -92,6 +97,39 @@ export type ChuckNorrisJoke = {
 
 export type ChuckNorrisJokeCategory = {
   category?: InputMaybe<Scalars['String']>;
+};
+
+/** All input for the create `Payout` mutation. */
+export type CreatePayoutInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The `Payout` to be created by this mutation. */
+  payout: PayoutInput;
+};
+
+/** The output of our create `Payout` mutation. */
+export type CreatePayoutPayload = {
+  __typename?: 'CreatePayoutPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The `Payout` that was created by this mutation. */
+  payout?: Maybe<Payout>;
+  /** An edge for our `Payout`. May be used by Relay 1. */
+  payoutEdge?: Maybe<PayoutsEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+};
+
+
+/** The output of our create `Payout` mutation. */
+export type CreatePayoutPayloadPayoutEdgeArgs = {
+  orderBy?: InputMaybe<Array<PayoutsOrderBy>>;
 };
 
 /** All input for the `createTest` mutation. */
@@ -159,6 +197,39 @@ export type CreateUserPayload = {
 /** The output of our create `User` mutation. */
 export type CreateUserPayloadUserEdgeArgs = {
   orderBy?: InputMaybe<Array<UsersOrderBy>>;
+};
+
+/** All input for the `deletePayout` mutation. */
+export type DeletePayoutInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  id: Scalars['UUID'];
+};
+
+/** The output of our delete `Payout` mutation. */
+export type DeletePayoutPayload = {
+  __typename?: 'DeletePayoutPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']>;
+  deletedPayoutNodeId?: Maybe<Scalars['ID']>;
+  /** The `Payout` that was deleted by this mutation. */
+  payout?: Maybe<Payout>;
+  /** An edge for our `Payout`. May be used by Relay 1. */
+  payoutEdge?: Maybe<PayoutsEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+};
+
+
+/** The output of our delete `Payout` mutation. */
+export type DeletePayoutPayloadPayoutEdgeArgs = {
+  orderBy?: InputMaybe<Array<PayoutsOrderBy>>;
 };
 
 /** All input for the `deleteUser` mutation. */
@@ -253,9 +324,14 @@ export type LogPayload = {
 export type Mutation = {
   __typename?: 'Mutation';
   authenticate?: Maybe<AuthenticatePayload>;
+  authenticateForRefresh?: Maybe<Scalars['String']>;
+  /** Creates a single `Payout`. */
+  createPayout?: Maybe<CreatePayoutPayload>;
   createTest?: Maybe<CreateTestPayload>;
   /** Creates a single `User`. */
   createUser?: Maybe<CreateUserPayload>;
+  /** Deletes a single `Payout` using a unique key. */
+  deletePayout?: Maybe<DeletePayoutPayload>;
   /** Deletes a single `User` using a unique key. */
   deleteUser?: Maybe<DeleteUserPayload>;
   /** If you've forgotten your password, give us one of your email addresses and we'll send you a reset token. Note this only works if you have added an email address! */
@@ -265,6 +341,8 @@ export type Mutation = {
   log?: Maybe<LogPayload>;
   registerWithLoginPassword?: Maybe<RegisterWithLoginPasswordPayload>;
   resetPassword?: Maybe<ResetPasswordPayload>;
+  /** Updates a single `Payout` using a unique key and a patch. */
+  updatePayout?: Maybe<UpdatePayoutPayload>;
   /** Updates a single `User` using a unique key and a patch. */
   updateUser?: Maybe<UpdateUserPayload>;
   /** Once you have received a verification token for your email, you may call this mutation with that token to make your email verified. */
@@ -279,6 +357,18 @@ export type MutationAuthenticateArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationAuthenticateForRefreshArgs = {
+  input: AuthenticateForRefreshInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreatePayoutArgs = {
+  input: CreatePayoutInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateTestArgs = {
   input: CreateTestInput;
 };
@@ -287,6 +377,12 @@ export type MutationCreateTestArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateUserArgs = {
   input: CreateUserInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeletePayoutArgs = {
+  input: DeletePayoutInput;
 };
 
 
@@ -327,6 +423,12 @@ export type MutationResetPasswordArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdatePayoutArgs = {
+  input: UpdatePayoutInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateUserArgs = {
   input: UpdateUserInput;
 };
@@ -350,6 +452,91 @@ export type PageInfo = {
   startCursor?: Maybe<Scalars['Cursor']>;
 };
 
+export type Payout = {
+  __typename?: 'Payout';
+  createdAt: Scalars['Datetime'];
+  currencyCode: Scalars['String'];
+  id: Scalars['UUID'];
+  payoutId: Scalars['String'];
+  totalAmount: Scalars['Int'];
+  updatedAt: Scalars['Datetime'];
+};
+
+/** A condition to be used against `Payout` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export type PayoutCondition = {
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['UUID']>;
+  /** Checks for equality with the object’s `payoutId` field. */
+  payoutId?: InputMaybe<Scalars['String']>;
+};
+
+/** A filter to be used against `Payout` object types. All fields are combined with a logical ‘and.’ */
+export type PayoutFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<PayoutFilter>>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<UuidFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<PayoutFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<PayoutFilter>>;
+  /** Filter by the object’s `payoutId` field. */
+  payoutId?: InputMaybe<StringFilter>;
+};
+
+/** An input for mutations affecting `Payout` */
+export type PayoutInput = {
+  createdAt?: InputMaybe<Scalars['Datetime']>;
+  currencyCode: Scalars['String'];
+  id?: InputMaybe<Scalars['UUID']>;
+  payoutId: Scalars['String'];
+  totalAmount: Scalars['Int'];
+  updatedAt?: InputMaybe<Scalars['Datetime']>;
+};
+
+/** Represents an update to a `Payout`. Fields that are set will be updated. */
+export type PayoutPatch = {
+  createdAt?: InputMaybe<Scalars['Datetime']>;
+  currencyCode?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['UUID']>;
+  payoutId?: InputMaybe<Scalars['String']>;
+  totalAmount?: InputMaybe<Scalars['Int']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']>;
+};
+
+/** A connection to a list of `Payout` values. */
+export type PayoutsConnection = {
+  __typename?: 'PayoutsConnection';
+  /** A list of edges which contains the `Payout` and cursor to aid in pagination. */
+  edges: Array<PayoutsEdge>;
+  /** A list of `Payout` objects. */
+  nodes: Array<Payout>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Payout` you could get from the connection. */
+  totalCount: Scalars['Int'];
+};
+
+/** A `Payout` edge in the connection. */
+export type PayoutsEdge = {
+  __typename?: 'PayoutsEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']>;
+  /** The `Payout` at the end of the edge. */
+  node: Payout;
+};
+
+/** Methods to use when ordering `Payout`. */
+export enum PayoutsOrderBy {
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  Natural = 'NATURAL',
+  PayoutIdAsc = 'PAYOUT_ID_ASC',
+  PayoutIdDesc = 'PAYOUT_ID_DESC',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
+}
+
 /** The root query type which gives access points into the data universe. */
 export type Query = {
   __typename?: 'Query';
@@ -360,6 +547,9 @@ export type Query = {
   currentUserIsAdmin?: Maybe<Scalars['Boolean']>;
   getChuckNorrisJoke?: Maybe<ChuckNorrisJoke>;
   getChuckNorrisJokeByCategory?: Maybe<ChuckNorrisJoke>;
+  payout?: Maybe<Payout>;
+  /** Reads and enables pagination through a set of `Payout`. */
+  payouts?: Maybe<PayoutsConnection>;
   /**
    * Exposes the root query type nested one level down. This is helpful for Relay 1
    * which can only query top level fields if they are in a particular form.
@@ -384,6 +574,25 @@ export type Query = {
 /** The root query type which gives access points into the data universe. */
 export type QueryGetChuckNorrisJokeByCategoryArgs = {
   input?: InputMaybe<ChuckNorrisJokeCategory>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryPayoutArgs = {
+  id: Scalars['UUID'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryPayoutsArgs = {
+  after?: InputMaybe<Scalars['Cursor']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  condition?: InputMaybe<PayoutCondition>;
+  filter?: InputMaybe<PayoutFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<PayoutsOrderBy>>;
 };
 
 
@@ -683,6 +892,40 @@ export type UuidFilter = {
   notEqualTo?: InputMaybe<Scalars['UUID']>;
   /** Not included in the specified list. */
   notIn?: InputMaybe<Array<Scalars['UUID']>>;
+};
+
+/** All input for the `updatePayout` mutation. */
+export type UpdatePayoutInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  id: Scalars['UUID'];
+  /** An object where the defined keys will be set on the `Payout` being updated. */
+  patch: PayoutPatch;
+};
+
+/** The output of our update `Payout` mutation. */
+export type UpdatePayoutPayload = {
+  __typename?: 'UpdatePayoutPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The `Payout` that was updated by this mutation. */
+  payout?: Maybe<Payout>;
+  /** An edge for our `Payout`. May be used by Relay 1. */
+  payoutEdge?: Maybe<PayoutsEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+};
+
+
+/** The output of our update `Payout` mutation. */
+export type UpdatePayoutPayloadPayoutEdgeArgs = {
+  orderBy?: InputMaybe<Array<PayoutsOrderBy>>;
 };
 
 /** All input for the `updateUser` mutation. */
