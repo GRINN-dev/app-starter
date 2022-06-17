@@ -109,7 +109,6 @@ export const sendRefreshToken = (
   res: Response,
   token: string
 ) => {
-  console.log("🚀 ~ file: refreshTokenPlugin.ts ~ line 120 ~ res", res)
   res.cookie("qid", token, {
     httpOnly: true,
     sameSite: true, // if you're on a single origin, this may help prevent CSRF attacks
