@@ -9,7 +9,6 @@ const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } = process.env;
 export const installCookieJWT = (app:Express) => {
   //app.use(cookieParser());
   app.post("/access_token", async (req, res, next) => {
-    console.log("🚀 ~ file: installCookieJWT.ts ~ line 11 ~ app.post ~ res", res)
     const rootPgPool = app.get("rootPgPool");
     const token = req.cookies.qid; // `qid` is arbitrary; must match whatever cookie name we set in sendRefreshToken()
     if (token) {
