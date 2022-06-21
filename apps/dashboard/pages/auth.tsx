@@ -1,11 +1,11 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { LoginForm, LoginFormData } from "../../../@grinn/components";
+import { LoginForm, LoginFormData } from "@grinn/components";
 import {
   useAuthenticateMutation,
   useGetCurrentUserLazyQuery,
-  useGetCurrentUserQuery,
-} from "../../../@grinn/graphql-generated";
+} from "@grinn/graphql-generated";
+
 
 const AuthPage: NextPage = () => {
   const router = useRouter();

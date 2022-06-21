@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 
 import "@grinn/styles/dist/output.css";
-import { ApolloProviderWrapper } from "../../../@grinn/lib";
+import { ApolloProviderWrapper } from "@grinn/lib";
 
 import "react-circular-progressbar/dist/styles.css";
 
