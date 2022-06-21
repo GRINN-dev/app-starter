@@ -21,6 +21,7 @@
     "@storybook/react": "^6.5.3",
     "babel-loader": "^8.2.5",
     "@grinn/icons": "*",
+    "@grinn/lib": "*",
     "next": "^12.1.6",
     "storybook-addon-designs": "^6.2.1",
     "storybook-addon-next-router": "^3.1.1",

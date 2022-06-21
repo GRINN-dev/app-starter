@@ -32,6 +32,11 @@ export type Scalars = {
   UUID: any;
 };
 
+export type AuthenticateForRefreshInput = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
 /** All input for the `authenticate` mutation. */
 export type AuthenticateInput = {
   /**
@@ -253,6 +258,7 @@ export type LogPayload = {
 export type Mutation = {
   __typename?: 'Mutation';
   authenticate?: Maybe<AuthenticatePayload>;
+  authenticateForRefresh?: Maybe<Scalars['String']>;
   createTest?: Maybe<CreateTestPayload>;
   /** Creates a single `User`. */
   createUser?: Maybe<CreateUserPayload>;
@@ -275,6 +281,12 @@ export type Mutation = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationAuthenticateArgs = {
   input: AuthenticateInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationAuthenticateForRefreshArgs = {
+  input: AuthenticateForRefreshInput;
 };
 
 

@@ -20,6 +20,7 @@ const AuthPage: NextPage = () => {
             variables: { input: data },
           });
           const { jwt } = res.authenticate;
+          console.log("🚀 ~ file: auth.tsx ~ line 23 ~ onSubmit={ ~ jwt", jwt);
           localStorage.setItem("token", jwt);
 
           loadCurrentUser({
