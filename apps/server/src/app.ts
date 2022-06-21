@@ -3,6 +3,7 @@ import {
   installPostgraphile,
   installDatabasePools,
   installCors,
+  installCookieJWT,
 } from "./middlewares";
 import { installVoyager } from "./middlewares/installVoyager";
 
@@ -24,6 +25,7 @@ export const makeApp = () => {
   installCors(app);
   installDatabasePools(app);
   installPostgraphile(app);
+  installCookieJWT(app);
   installVoyager(app);
   return app;
 };

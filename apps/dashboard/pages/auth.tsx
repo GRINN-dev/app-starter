@@ -4,8 +4,8 @@ import { LoginForm, LoginFormData } from "@grinn/components";
 import {
   useAuthenticateMutation,
   useGetCurrentUserLazyQuery,
-  useGetCurrentUserQuery,
 } from "@grinn/graphql-generated";
+
 
 const AuthPage: NextPage = () => {
   const router = useRouter();
