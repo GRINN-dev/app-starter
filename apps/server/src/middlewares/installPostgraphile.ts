@@ -8,7 +8,7 @@ import { getRootPgPool } from "./installDatabasePools";
 import { resolve } from "path";
 import ConnectionFilterPlugin from "postgraphile-plugin-connection-filter";
 import { NodePlugin } from "graphile-build";
-import RefreshTokenPlugin from "../plugins/refreshTokenPlugin.js";
+import RefreshTokenPlugin from "../plugins/refreshTokenPlugin";
 
 import { makePgSmartTagsFromFilePlugin } from "postgraphile/plugins";
 

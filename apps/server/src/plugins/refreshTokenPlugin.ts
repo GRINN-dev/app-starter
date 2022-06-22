@@ -116,7 +116,7 @@ export const signToken = (
 export const sendRefreshToken = (res: Response, token: string) => {
   res.cookie("qid", token, {
     httpOnly: true,
-    sameSite: true, // if you're on a single origin, this may help prevent CSRF attacks
+    sameSite: false, // if you're on a single origin, this may help prevent CSRF attacks
     path: "/access_token",
   });
 };
