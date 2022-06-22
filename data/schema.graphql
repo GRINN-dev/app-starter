@@ -800,12 +800,12 @@ type Mutation {
     """
     input: GeneratePresignedPostInput!
   ): GeneratePresignedPostPayload
-  generateRefreshToken(
+  generateAuthToken(
     """
     The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
     """
-    input: GenerateRefreshTokenInput!
-  ): GenerateRefreshTokenPayload
+    input: GenerateAuthTokenInput!
+  ): GenerateAuthTokenPayload
 }
 
 """The output of our create `User` mutation."""
@@ -1171,11 +1171,11 @@ input GeneratePresignedPostInput {
   key: String!
 }
 
-type GenerateRefreshTokenPayload {
-  refresh_token: String!
+type GenerateAuthTokenPayload {
+  access_token: String!
 }
 
-input GenerateRefreshTokenInput {
+input GenerateAuthTokenInput {
   email: String!
   password: String!
 }

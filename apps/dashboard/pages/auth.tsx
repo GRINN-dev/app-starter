@@ -22,7 +22,7 @@ const AuthPage: NextPage = () => {
           const { jwt } = res.authenticate;
           console.log("🚀 ~ file: auth.tsx ~ line 23 ~ onSubmit={ ~ jwt", jwt);
           localStorage.setItem("token", jwt);
-
+          /*
           loadCurrentUser({
             context: { Headers: { Authorization: "Bearer " + jwt } },
             fetchPolicy: "network-only",
@@ -32,6 +32,7 @@ const AuthPage: NextPage = () => {
               ? router.replace("/dashboard")
               : router.replace("/dashboard-admin");
           });
+          */
         }}
       />
     </div>

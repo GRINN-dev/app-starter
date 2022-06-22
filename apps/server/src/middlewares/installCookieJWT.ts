@@ -1,12 +1,12 @@
-import cookieParser from 'cookie-parser'
+import cookieParser from "cookie-parser";
 import jwtPkg from "jsonwebtoken";
-import {Express} from "express"
+import { Express } from "express";
 const { verify } = jwtPkg;
 
 import { signToken, sendRefreshToken } from "../plugins/refreshTokenPlugin.js";
 const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } = process.env;
 
-export const installCookieJWT = (app:Express) => {
+export const installCookieJWT = (app: Express) => {
   app.use(cookieParser());
   app.post("/access_token", async (req, res, next) => {
     const rootPgPool = app.get("rootPgPool");
@@ -14,12 +14,12 @@ export const installCookieJWT = (app:Express) => {
     if (token) {
       try {
         const payload = verify(token, REFRESH_TOKEN_SECRET!, {
-          algorithms: ["HS256"]
+          algorithms: ["HS256"],
         });
         // user lookup - if user was deleted, they no longer get a token
         const { rows } = await rootPgPool.query(
-          ` SELECT person_id AS sub FROM demo_private.person_account 
-            WHERE person_id = $1
+          ` SELECT user_id AS sub FROM priv.user_secrets 
+            WHERE user_id = $1
             LIMIT 1
           `,
           [payload.sub]
@@ -29,19 +29,27 @@ export const installCookieJWT = (app:Express) => {
           // go ahead and refresh refresh token while we're here
           sendRefreshToken(
             res,
-            signToken(sub, {
-              expiresIn: "7 days",
-              audience: undefined,
-              issuer: undefined
-            }, REFRESH_TOKEN_SECRET)
+            signToken(
+              sub,
+              {
+                expiresIn: "7 days",
+                audience: undefined,
+                issuer: undefined,
+              },
+              REFRESH_TOKEN_SECRET
+            )
           );
           return res.send({
             ok: true,
-            access_token: signToken(sub, {
-              audience: undefined,
-              issuer: undefined,
-              expiresIn: undefined
-            }, ACCESS_TOKEN_SECRET)
+            access_token: signToken(
+              sub,
+              {
+                audience: undefined,
+                issuer: undefined,
+                expiresIn: undefined,
+              },
+              ACCESS_TOKEN_SECRET
+            ),
           });
         }
       } catch (err) {
@@ -52,4 +60,3 @@ export const installCookieJWT = (app:Express) => {
     return res.send({ ok: false, accessToken: "" });
   });
 };
-

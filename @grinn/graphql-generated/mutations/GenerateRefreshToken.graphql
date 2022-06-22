@@ -1,5 +1,0 @@
-mutation GenerateRefreshToken($input: GenerateRefreshTokenInput!) {
-  generateRefreshToken(input: $input) {
-    refresh_token
-  }
-}

@@ -217,6 +217,16 @@ export type ForgotPasswordPayload = {
   query?: Maybe<Query>;
 };
 
+export type GenerateAuthTokenInput = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
+export type GenerateAuthTokenPayload = {
+  __typename?: 'GenerateAuthTokenPayload';
+  access_token: Scalars['String'];
+};
+
 export type GeneratePresignedPostInput = {
   key: Scalars['String'];
 };
@@ -225,16 +235,6 @@ export type GeneratePresignedPostPayload = {
   __typename?: 'GeneratePresignedPostPayload';
   fields?: Maybe<Scalars['JSON']>;
   url?: Maybe<Scalars['String']>;
-};
-
-export type GenerateRefreshTokenInput = {
-  email: Scalars['String'];
-  password: Scalars['String'];
-};
-
-export type GenerateRefreshTokenPayload = {
-  __typename?: 'GenerateRefreshTokenPayload';
-  refresh_token: Scalars['String'];
 };
 
 /** All input for the `log` mutation. */
@@ -270,8 +270,8 @@ export type Mutation = {
   deleteUser?: Maybe<DeleteUserPayload>;
   /** If you've forgotten your password, give us one of your email addresses and we'll send you a reset token. Note this only works if you have added an email address! */
   forgotPassword?: Maybe<ForgotPasswordPayload>;
+  generateAuthToken?: Maybe<GenerateAuthTokenPayload>;
   generatePresignedPost?: Maybe<GeneratePresignedPostPayload>;
-  generateRefreshToken?: Maybe<GenerateRefreshTokenPayload>;
   /** Function for debugging. */
   log?: Maybe<LogPayload>;
   registerWithLoginPassword?: Maybe<RegisterWithLoginPasswordPayload>;
@@ -314,14 +314,14 @@ export type MutationForgotPasswordArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
-export type MutationGeneratePresignedPostArgs = {
-  input: GeneratePresignedPostInput;
+export type MutationGenerateAuthTokenArgs = {
+  input: GenerateAuthTokenInput;
 };
 
 
 /** The root mutation type which contains root level fields which mutate data. */
-export type MutationGenerateRefreshTokenArgs = {
-  input: GenerateRefreshTokenInput;
+export type MutationGeneratePresignedPostArgs = {
+  input: GeneratePresignedPostInput;
 };
 
 
@@ -974,12 +974,12 @@ export type AuthenticateMutationVariables = Exact<{
 
 export type AuthenticateMutation = { __typename?: 'Mutation', authenticate?: { __typename?: 'AuthenticatePayload', jwt?: any | null } | null };
 
-export type GenerateRefreshTokenMutationVariables = Exact<{
-  input: GenerateRefreshTokenInput;
+export type GenerateAuthTokenMutationVariables = Exact<{
+  input: GenerateAuthTokenInput;
 }>;
 
 
-export type GenerateRefreshTokenMutation = { __typename?: 'Mutation', generateRefreshToken?: { __typename?: 'GenerateRefreshTokenPayload', refresh_token: string } | null };
+export type GenerateAuthTokenMutation = { __typename?: 'Mutation', generateAuthToken?: { __typename?: 'GenerateAuthTokenPayload', access_token: string } | null };
 
 export type GetAllUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1044,39 +1044,39 @@ export function useAuthenticateMutation(baseOptions?: Apollo.MutationHookOptions
 export type AuthenticateMutationHookResult = ReturnType<typeof useAuthenticateMutation>;
 export type AuthenticateMutationResult = Apollo.MutationResult<AuthenticateMutation>;
 export type AuthenticateMutationOptions = Apollo.BaseMutationOptions<AuthenticateMutation, AuthenticateMutationVariables>;
-export const GenerateRefreshTokenDocument = gql`
-    mutation GenerateRefreshToken($input: GenerateRefreshTokenInput!) {
-  generateRefreshToken(input: $input) {
-    refresh_token
+export const GenerateAuthTokenDocument = gql`
+    mutation GenerateAuthToken($input: GenerateAuthTokenInput!) {
+  generateAuthToken(input: $input) {
+    access_token
   }
 }
     `;
-export type GenerateRefreshTokenMutationFn = Apollo.MutationFunction<GenerateRefreshTokenMutation, GenerateRefreshTokenMutationVariables>;
+export type GenerateAuthTokenMutationFn = Apollo.MutationFunction<GenerateAuthTokenMutation, GenerateAuthTokenMutationVariables>;
 
 /**
- * __useGenerateRefreshTokenMutation__
+ * __useGenerateAuthTokenMutation__
  *
- * To run a mutation, you first call `useGenerateRefreshTokenMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useGenerateRefreshTokenMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useGenerateAuthTokenMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useGenerateAuthTokenMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [generateRefreshTokenMutation, { data, loading, error }] = useGenerateRefreshTokenMutation({
+ * const [generateAuthTokenMutation, { data, loading, error }] = useGenerateAuthTokenMutation({
  *   variables: {
  *      input: // value for 'input'
  *   },
  * });
  */
-export function useGenerateRefreshTokenMutation(baseOptions?: Apollo.MutationHookOptions<GenerateRefreshTokenMutation, GenerateRefreshTokenMutationVariables>) {
+export function useGenerateAuthTokenMutation(baseOptions?: Apollo.MutationHookOptions<GenerateAuthTokenMutation, GenerateAuthTokenMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<GenerateRefreshTokenMutation, GenerateRefreshTokenMutationVariables>(GenerateRefreshTokenDocument, options);
+        return Apollo.useMutation<GenerateAuthTokenMutation, GenerateAuthTokenMutationVariables>(GenerateAuthTokenDocument, options);
       }
-export type GenerateRefreshTokenMutationHookResult = ReturnType<typeof useGenerateRefreshTokenMutation>;
-export type GenerateRefreshTokenMutationResult = Apollo.MutationResult<GenerateRefreshTokenMutation>;
-export type GenerateRefreshTokenMutationOptions = Apollo.BaseMutationOptions<GenerateRefreshTokenMutation, GenerateRefreshTokenMutationVariables>;
+export type GenerateAuthTokenMutationHookResult = ReturnType<typeof useGenerateAuthTokenMutation>;
+export type GenerateAuthTokenMutationResult = Apollo.MutationResult<GenerateAuthTokenMutation>;
+export type GenerateAuthTokenMutationOptions = Apollo.BaseMutationOptions<GenerateAuthTokenMutation, GenerateAuthTokenMutationVariables>;
 export const GetAllUsersDocument = gql`
     query GetAllUsers {
   users {
