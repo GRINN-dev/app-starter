@@ -15,18 +15,26 @@ export interface Token {
 const RefreshTokenPlugin = makeExtendSchemaPlugin(
   (_, { pgJwtSignOptions }) => ({
     typeDefs: gql`
-      input AuthenticateForRefreshInput {
+      input GenerateRefreshTokenInput {
         email: String!
         password: String!
       }
+      type GenerateRefreshTokenPayload {
+        refresh_token: String!
+      }
       extend type Mutation {
-        authenticateForRefresh(input: AuthenticateForRefreshInput!): String
+        generateRefreshToken(
+          input: GenerateRefreshTokenInput!
+        ): GenerateRefreshTokenPayload
       }
     `,
     resolvers: {
       Mutation: {
-        authenticateForRefresh: async (_, args, context) => {
-          console.log("🚀 ~ file: refreshTokenPlugin.ts ~ line 28 ~ authenticateForRefresh: ~ context", context)
+        generateRefreshToken: async (_, args, context) => {
+          console.log(
+            "🚀 ~ file: refreshTokenPlugin.ts ~ line 28 ~ generateRefreshToken: ~ context",
+            context
+          );
           const { email, password } = args.input;
           try {
             // Because this is auth, we use rootPgPool, which uses PostGraphile's role
@@ -63,7 +71,7 @@ const RefreshTokenPlugin = makeExtendSchemaPlugin(
             );
 
             sendRefreshToken(context.res, refreshToken);
-            return accessToken;
+            return { refresh_token: accessToken };
           } catch (e) {
             console.error(e);
             throw e;
@@ -105,10 +113,7 @@ export const signToken = (
   );
 };
 
-export const sendRefreshToken = (
-  res: Response,
-  token: string
-) => {
+export const sendRefreshToken = (res: Response, token: string) => {
   res.cookie("qid", token, {
     httpOnly: true,
     sameSite: true, // if you're on a single origin, this may help prevent CSRF attacks
