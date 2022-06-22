@@ -5,10 +5,12 @@ import {
   useAuthenticateMutation,
   useGetCurrentUserLazyQuery,
   useGetCurrentUserQuery,
+  useGenerateAuthTokenMutation,
 } from "@grinn/graphql-generated";
 
 const AuthPage: NextPage = () => {
   const router = useRouter();
+  const [getAuthToken] = useGenerateAuthTokenMutation();
   const [authenticate] = useAuthenticateMutation();
   const [loadCurrentUser] = useGetCurrentUserLazyQuery({});
 
@@ -16,12 +18,15 @@ const AuthPage: NextPage = () => {
     <div className="flex justify-center">
       <LoginForm
         onSubmit={async (data: LoginFormData) => {
-          const { data: res } = await authenticate({
+          const { data: res } = await getAuthToken({
             variables: { input: data },
           });
-          const { jwt } = res.authenticate;
-          console.log("🚀 ~ file: auth.tsx ~ line 23 ~ onSubmit={ ~ jwt", jwt);
-          localStorage.setItem("token", jwt);
+          const { access_token } = res.generateAuthToken;
+          console.log(
+            "🚀 ~ file: auth.tsx ~ line 23 ~ onSubmit={ ~ jwt",
+            access_token
+          );
+          localStorage.setItem("token", access_token);
           /*
           loadCurrentUser({
             context: { Headers: { Authorization: "Bearer " + jwt } },
