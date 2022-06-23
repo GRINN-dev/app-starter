@@ -7,6 +7,7 @@ import {
   useGetCurrentUserQuery,
   useGenerateAuthTokenMutation,
 } from "@grinn/graphql-generated";
+import { getAccessToken, setAccessToken } from "../lib/accessToken";
 
 const AuthPage: NextPage = () => {
   const router = useRouter();
@@ -26,10 +27,17 @@ const AuthPage: NextPage = () => {
             "🚀 ~ file: auth.tsx ~ line 23 ~ onSubmit={ ~ jwt",
             access_token
           );
-          localStorage.setItem("token", access_token);
-          /*
+          console.log("auth");
+          setAccessToken(access_token);
+          console.log("auth get tok : ", getAccessToken());
+          //localStorage.setItem("token", access_token);
+
           loadCurrentUser({
-            context: { Headers: { Authorization: "Bearer " + jwt } },
+            /*
+            context: {
+              Headers: { Authorization: "Bearer " + jwt },
+            },
+            */
             fetchPolicy: "network-only",
           }).then(data => {
             console.log("user", data);
@@ -37,7 +45,6 @@ const AuthPage: NextPage = () => {
               ? router.replace("/dashboard")
               : router.replace("/dashboard-admin");
           });
-          */
         }}
       />
     </div>

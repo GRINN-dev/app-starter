@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 
 import "@grinn/styles/dist/output.css";
 import { ApolloProviderWrapper } from "@grinn/lib";
+import { setAccessToken, getAccessToken } from "../lib/accessToken";
 
 import "react-circular-progressbar/dist/styles.css";
 import Script from "next/script";
@@ -27,6 +28,8 @@ function MyApp({ Component, pageProps }) {
 
       <ApolloProviderWrapper
         endpoint={process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT}
+        setAccessToken={setAccessToken}
+        getAccessToken={getAccessToken}
       >
         <Component {...pageProps} />
       </ApolloProviderWrapper>
