@@ -117,6 +117,6 @@ export const sendRefreshToken = (res: Response, token: string) => {
   res.cookie("qid", token, {
     httpOnly: true,
     sameSite: false, // if you're on a single origin, this may help prevent CSRF attacks
-    path: "/access_token",
+    path: "/refresh_token",
   });
 };
