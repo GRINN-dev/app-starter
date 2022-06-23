@@ -9,14 +9,14 @@ import {
 
 const AuthPage: NextPage = () => {
   const router = useRouter();
-  const [getAuthToken] = useAuthenticateMutation();
+  const [authenticate] = useAuthenticateMutation();
   const [loadCurrentUser] = useGetCurrentUserLazyQuery({});
 
   return (
     <div className="flex justify-center">
       <LoginForm
         onSubmit={async (data: LoginFormData) => {
-          const { data: res } = await getAuthToken({
+          const { data: res } = await authenticate({
             variables: { input: data },
           });
           const { access_token } = res.authenticate;
