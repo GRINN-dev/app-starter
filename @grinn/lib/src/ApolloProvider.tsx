@@ -2,6 +2,7 @@ import { ApolloProvider } from "@apollo/client";
 import { setRevalidateHeaders } from "next/dist/server/send-payload";
 import { FC } from "react";
 import { apolloClient } from "./apolloClient";
+import CustomApolloProvider from "./CustomApolloProvider";
 
 // apollo provider wrapper
 export const ApolloProviderWrapper: FC<{
@@ -11,10 +12,10 @@ export const ApolloProviderWrapper: FC<{
   children: React.ReactNode;
 }> = ({ endpoint, setAccessToken, getAccessToken, children }) => {
   return (
-    <ApolloProvider
-      client={apolloClient({ endpoint, setAccessToken, getAccessToken })}
-    >
-      {children}
-    </ApolloProvider>
+    <CustomApolloProvider
+      endpoint={endpoint}
+      getAccessToken={getAccessToken}
+      children={children}
+    ></CustomApolloProvider>
   );
 };
