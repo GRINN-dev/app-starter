@@ -1,5 +1,0 @@
-mutation GenerateAuthToken($input: GenerateAuthTokenInput!) {
-  generateAuthToken(input: $input) {
-    access_token
-  }
-}

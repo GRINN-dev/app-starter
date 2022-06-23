@@ -23,37 +23,18 @@ export type Scalars = {
   Datetime: any;
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: any;
-  /**
-   * A JSON Web Token defined by [RFC 7519](https://tools.ietf.org/html/rfc7519)
-   * which securely represents claims between two parties.
-   */
-  Jwt: any;
   /** A universally unique identifier as defined by [RFC 4122](https://tools.ietf.org/html/rfc4122). */
   UUID: any;
 };
 
-/** All input for the `authenticate` mutation. */
 export type AuthenticateInput = {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']>;
-  email?: InputMaybe<Scalars['String']>;
-  password?: InputMaybe<Scalars['String']>;
+  email: Scalars['String'];
+  password: Scalars['String'];
 };
 
-/** The output of our `authenticate` mutation. */
 export type AuthenticatePayload = {
   __typename?: 'AuthenticatePayload';
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']>;
-  jwt?: Maybe<Scalars['Jwt']>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
+  access_token: Scalars['String'];
 };
 
 /** A filter to be used against Boolean fields. All fields are combined with a logical ‘and.’ */
@@ -217,16 +198,6 @@ export type ForgotPasswordPayload = {
   query?: Maybe<Query>;
 };
 
-export type GenerateAuthTokenInput = {
-  email: Scalars['String'];
-  password: Scalars['String'];
-};
-
-export type GenerateAuthTokenPayload = {
-  __typename?: 'GenerateAuthTokenPayload';
-  access_token: Scalars['String'];
-};
-
 export type GeneratePresignedPostInput = {
   key: Scalars['String'];
 };
@@ -270,7 +241,6 @@ export type Mutation = {
   deleteUser?: Maybe<DeleteUserPayload>;
   /** If you've forgotten your password, give us one of your email addresses and we'll send you a reset token. Note this only works if you have added an email address! */
   forgotPassword?: Maybe<ForgotPasswordPayload>;
-  generateAuthToken?: Maybe<GenerateAuthTokenPayload>;
   generatePresignedPost?: Maybe<GeneratePresignedPostPayload>;
   /** Function for debugging. */
   log?: Maybe<LogPayload>;
@@ -310,12 +280,6 @@ export type MutationDeleteUserArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationForgotPasswordArgs = {
   input: ForgotPasswordInput;
-};
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export type MutationGenerateAuthTokenArgs = {
-  input: GenerateAuthTokenInput;
 };
 
 
@@ -972,14 +936,7 @@ export type AuthenticateMutationVariables = Exact<{
 }>;
 
 
-export type AuthenticateMutation = { __typename?: 'Mutation', authenticate?: { __typename?: 'AuthenticatePayload', jwt?: any | null } | null };
-
-export type GenerateAuthTokenMutationVariables = Exact<{
-  input: GenerateAuthTokenInput;
-}>;
-
-
-export type GenerateAuthTokenMutation = { __typename?: 'Mutation', generateAuthToken?: { __typename?: 'GenerateAuthTokenPayload', access_token: string } | null };
+export type AuthenticateMutation = { __typename?: 'Mutation', authenticate?: { __typename?: 'AuthenticatePayload', access_token: string } | null };
 
 export type GetAllUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1014,7 +971,7 @@ export const User_FragmentFragmentDoc = gql`
 export const AuthenticateDocument = gql`
     mutation Authenticate($input: AuthenticateInput!) {
   authenticate(input: $input) {
-    jwt
+    access_token
   }
 }
     `;
@@ -1044,39 +1001,6 @@ export function useAuthenticateMutation(baseOptions?: Apollo.MutationHookOptions
 export type AuthenticateMutationHookResult = ReturnType<typeof useAuthenticateMutation>;
 export type AuthenticateMutationResult = Apollo.MutationResult<AuthenticateMutation>;
 export type AuthenticateMutationOptions = Apollo.BaseMutationOptions<AuthenticateMutation, AuthenticateMutationVariables>;
-export const GenerateAuthTokenDocument = gql`
-    mutation GenerateAuthToken($input: GenerateAuthTokenInput!) {
-  generateAuthToken(input: $input) {
-    access_token
-  }
-}
-    `;
-export type GenerateAuthTokenMutationFn = Apollo.MutationFunction<GenerateAuthTokenMutation, GenerateAuthTokenMutationVariables>;
-
-/**
- * __useGenerateAuthTokenMutation__
- *
- * To run a mutation, you first call `useGenerateAuthTokenMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useGenerateAuthTokenMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [generateAuthTokenMutation, { data, loading, error }] = useGenerateAuthTokenMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useGenerateAuthTokenMutation(baseOptions?: Apollo.MutationHookOptions<GenerateAuthTokenMutation, GenerateAuthTokenMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<GenerateAuthTokenMutation, GenerateAuthTokenMutationVariables>(GenerateAuthTokenDocument, options);
-      }
-export type GenerateAuthTokenMutationHookResult = ReturnType<typeof useGenerateAuthTokenMutation>;
-export type GenerateAuthTokenMutationResult = Apollo.MutationResult<GenerateAuthTokenMutation>;
-export type GenerateAuthTokenMutationOptions = Apollo.BaseMutationOptions<GenerateAuthTokenMutation, GenerateAuthTokenMutationVariables>;
 export const GetAllUsersDocument = gql`
     query GetAllUsers {
   users {

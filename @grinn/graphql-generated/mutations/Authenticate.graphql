@@ -1,5 +1,5 @@
 mutation Authenticate($input: AuthenticateInput!) {
   authenticate(input: $input) {
-    jwt
+    access_token
   }
 }
