@@ -2,16 +2,14 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { LoginForm, LoginFormData } from "@grinn/components";
 import {
-  useAuthenticateMutation,
   useGetCurrentUserLazyQuery,
   useGetCurrentUserQuery,
-  useGenerateAuthTokenMutation,
+  useAuthenticateMutation,
 } from "@grinn/graphql-generated";
 
 const AuthPage: NextPage = () => {
   const router = useRouter();
-  const [getAuthToken] = useGenerateAuthTokenMutation();
-  const [authenticate] = useAuthenticateMutation();
+  const [getAuthToken] = useAuthenticateMutation();
   const [loadCurrentUser] = useGetCurrentUserLazyQuery({});
 
   return (
@@ -21,7 +19,7 @@ const AuthPage: NextPage = () => {
           const { data: res } = await getAuthToken({
             variables: { input: data },
           });
-          const { access_token } = res.generateAuthToken;
+          const { access_token } = res.authenticate;
           console.log(
             "🚀 ~ file: auth.tsx ~ line 23 ~ onSubmit={ ~ jwt",
             access_token

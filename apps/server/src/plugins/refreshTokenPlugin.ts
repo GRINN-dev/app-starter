@@ -15,22 +15,22 @@ export interface Token {
 const RefreshTokenPlugin = makeExtendSchemaPlugin(
   (_, { pgJwtSignOptions }) => ({
     typeDefs: gql`
-      input GenerateAuthTokenInput {
+      input AuthenticateInput {
         email: String!
         password: String!
       }
-      type GenerateAuthTokenPayload {
+      type AuthenticatePayload {
         access_token: String!
       }
       extend type Mutation {
-        generateAuthToken(
-          input: GenerateAuthTokenInput!
-        ): GenerateAuthTokenPayload
+        authenticate(
+          input: AuthenticateInput!
+        ): AuthenticatePayload
       }
     `,
     resolvers: {
       Mutation: {
-        generateAuthToken: async (_, args, context) => {
+        authenticate: async (_, args, context) => {
           console.log(
             "🚀 ~ file: refreshTokenPlugin.ts ~ line 28 ~ generateRefreshToken: ~ context",
             context
