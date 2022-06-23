@@ -1,10 +1,11 @@
--- CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
--- CREATE TYPE publ.jwt_token AS (
---   role TEXT,
---   sub UUID,
---   exp BIGINT
--- );
--- COMMENT ON TYPE publ.jwt_token IS 'The JWT type PgJWTPlugin will sign when PostGraphile encounters it. sub means user id. Also used by generate_token_plaintext()';
+drop type if exists publ.jwt cascade;
+
+-- create jwt type
+create type publ.jwt as (
+  sub uuid,
+  exp bigint
+); 
+
 CREATE FUNCTION priv.generate_token_plaintext(email TEXT, password TEXT) RETURNS publ.jwt AS $$
 DECLARE var_sec priv.user_secrets;
 BEGIN
