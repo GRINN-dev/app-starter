@@ -62,6 +62,40 @@ type Query {
     filter: TestFilter
   ): [Test!]
 
+  """Reads and enables pagination through a set of `UserAuthentication`."""
+  userAuthentications(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `UserAuthentication`."""
+    orderBy: [UserAuthenticationsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: UserAuthenticationCondition
+
+    """
+    A filter to be used in determining which values should be returned by the collection.
+    """
+    filter: UserAuthenticationFilter
+  ): UserAuthenticationsConnection
+
   """Reads a set of `UserEmail`."""
   userEmailsList(
     """Only read the first `n` values of the set."""
@@ -118,6 +152,8 @@ type Query {
     filter: UserFilter
   ): UsersConnection
   test(id: UUID!): Test
+  userAuthentication(id: UUID!): UserAuthentication
+  userAuthenticationByServiceAndIdentifier(service: String!, identifier: String!): UserAuthentication
   userEmail(id: UUID!): UserEmail
   userEmailByUserIdAndEmail(userId: UUID!, email: String!): UserEmail
   user(id: UUID!): User
@@ -270,6 +306,40 @@ type User {
     """
     filter: TestFilter
   ): [Test!]!
+
+  """Reads and enables pagination through a set of `UserAuthentication`."""
+  userAuthentications(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `UserAuthentication`."""
+    orderBy: [UserAuthenticationsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: UserAuthenticationCondition
+
+    """
+    A filter to be used in determining which values should be returned by the collection.
+    """
+    filter: UserAuthenticationFilter
+  ): UserAuthenticationsConnection!
   fullName: String
   hasPassword: Boolean
 }
@@ -614,13 +684,59 @@ input StringFilter {
   greaterThanOrEqualToInsensitive: String
 }
 
-"""A `Test` edge in the connection."""
-type TestsEdge {
+"""A connection to a list of `UserAuthentication` values."""
+type UserAuthenticationsConnection {
+  """A list of `UserAuthentication` objects."""
+  nodes: [UserAuthentication!]!
+
+  """
+  A list of edges which contains the `UserAuthentication` and cursor to aid in pagination.
+  """
+  edges: [UserAuthenticationsEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """
+  The count of *all* `UserAuthentication` you could get from the connection.
+  """
+  totalCount: Int!
+}
+
+"""
+Contains information about the login providers this user has used, so that they may disconnect them should they wish.
+"""
+type UserAuthentication {
+  id: UUID!
+  userId: UUID!
+
+  """The login service used, e.g. `twitter` or `github`."""
+  service: String!
+
+  """A unique identifier for the user within the login service."""
+  identifier: String!
+
+  """Additional profile details extracted from this login method"""
+  details: JSON!
+  createdAt: Datetime!
+  updatedAt: Datetime!
+
+  """Reads a single `User` that is related to this `UserAuthentication`."""
+  user: User
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+"""A `UserAuthentication` edge in the connection."""
+type UserAuthenticationsEdge {
   """A cursor for use in pagination."""
   cursor: Cursor
 
-  """The `Test` at the end of the edge."""
-  node: Test!
+  """The `UserAuthentication` at the end of the edge."""
+  node: UserAuthentication!
 }
 
 """Information about pagination in a connection."""
@@ -636,6 +752,66 @@ type PageInfo {
 
   """When paginating forwards, the cursor to continue."""
   endCursor: Cursor
+}
+
+"""Methods to use when ordering `UserAuthentication`."""
+enum UserAuthenticationsOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  USER_ID_ASC
+  USER_ID_DESC
+  SERVICE_ASC
+  SERVICE_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""
+A condition to be used against `UserAuthentication` object types. All fields are
+tested for equality and combined with a logical ‘and.’
+"""
+input UserAuthenticationCondition {
+  """Checks for equality with the object’s `id` field."""
+  id: UUID
+
+  """Checks for equality with the object’s `userId` field."""
+  userId: UUID
+
+  """Checks for equality with the object’s `service` field."""
+  service: String
+}
+
+"""
+A filter to be used against `UserAuthentication` object types. All fields are combined with a logical ‘and.’
+"""
+input UserAuthenticationFilter {
+  """Filter by the object’s `id` field."""
+  id: UUIDFilter
+
+  """Filter by the object’s `userId` field."""
+  userId: UUIDFilter
+
+  """Filter by the object’s `service` field."""
+  service: StringFilter
+
+  """Checks for all expressions in this list."""
+  and: [UserAuthenticationFilter!]
+
+  """Checks for any expressions in this list."""
+  or: [UserAuthenticationFilter!]
+
+  """Negates the expression."""
+  not: UserAuthenticationFilter
+}
+
+"""A `Test` edge in the connection."""
+type TestsEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `Test` at the end of the edge."""
+  node: Test!
 }
 
 """A connection to a list of `User` values."""
@@ -719,6 +895,14 @@ input ChuckNorrisJokeCategory {
 The root mutation type which contains root level fields which mutate data.
 """
 type Mutation {
+  """Creates a single `UserAuthentication`."""
+  createUserAuthentication(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: CreateUserAuthenticationInput!
+  ): CreateUserAuthenticationPayload
+
   """Creates a single `User`."""
   createUser(
     """
@@ -727,6 +911,22 @@ type Mutation {
     input: CreateUserInput!
   ): CreateUserPayload
 
+  """Updates a single `UserAuthentication` using a unique key and a patch."""
+  updateUserAuthentication(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateUserAuthenticationInput!
+  ): UpdateUserAuthenticationPayload
+
+  """Updates a single `UserAuthentication` using a unique key and a patch."""
+  updateUserAuthenticationByServiceAndIdentifier(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateUserAuthenticationByServiceAndIdentifierInput!
+  ): UpdateUserAuthenticationPayload
+
   """Updates a single `User` using a unique key and a patch."""
   updateUser(
     """
@@ -734,6 +934,22 @@ type Mutation {
     """
     input: UpdateUserInput!
   ): UpdateUserPayload
+
+  """Deletes a single `UserAuthentication` using a unique key."""
+  deleteUserAuthentication(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteUserAuthenticationInput!
+  ): DeleteUserAuthenticationPayload
+
+  """Deletes a single `UserAuthentication` using a unique key."""
+  deleteUserAuthenticationByServiceAndIdentifier(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteUserAuthenticationByServiceAndIdentifierInput!
+  ): DeleteUserAuthenticationPayload
 
   """Deletes a single `User` using a unique key."""
   deleteUser(
@@ -802,6 +1018,61 @@ type Mutation {
   ): AuthenticatePayload
 }
 
+"""The output of our create `UserAuthentication` mutation."""
+type CreateUserAuthenticationPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `UserAuthentication` that was created by this mutation."""
+  userAuthentication: UserAuthentication
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `User` that is related to this `UserAuthentication`."""
+  user: User
+
+  """An edge for our `UserAuthentication`. May be used by Relay 1."""
+  userAuthenticationEdge(
+    """The method to use when ordering `UserAuthentication`."""
+    orderBy: [UserAuthenticationsOrderBy!] = [PRIMARY_KEY_ASC]
+  ): UserAuthenticationsEdge
+}
+
+"""All input for the create `UserAuthentication` mutation."""
+input CreateUserAuthenticationInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """The `UserAuthentication` to be created by this mutation."""
+  userAuthentication: UserAuthenticationInput!
+}
+
+"""An input for mutations affecting `UserAuthentication`"""
+input UserAuthenticationInput {
+  id: UUID
+  userId: UUID!
+
+  """The login service used, e.g. `twitter` or `github`."""
+  service: String!
+
+  """A unique identifier for the user within the login service."""
+  identifier: String!
+
+  """Additional profile details extracted from this login method"""
+  details: JSON
+  createdAt: Datetime
+  updatedAt: Datetime
+}
+
 """The output of our create `User` mutation."""
 type CreateUserPayload {
   """
@@ -856,6 +1127,88 @@ input UserInput {
   isVerified: Boolean
   createdAt: Datetime
   updatedAt: Datetime
+}
+
+"""The output of our update `UserAuthentication` mutation."""
+type UpdateUserAuthenticationPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `UserAuthentication` that was updated by this mutation."""
+  userAuthentication: UserAuthentication
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `User` that is related to this `UserAuthentication`."""
+  user: User
+
+  """An edge for our `UserAuthentication`. May be used by Relay 1."""
+  userAuthenticationEdge(
+    """The method to use when ordering `UserAuthentication`."""
+    orderBy: [UserAuthenticationsOrderBy!] = [PRIMARY_KEY_ASC]
+  ): UserAuthenticationsEdge
+}
+
+"""All input for the `updateUserAuthentication` mutation."""
+input UpdateUserAuthenticationInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  An object where the defined keys will be set on the `UserAuthentication` being updated.
+  """
+  patch: UserAuthenticationPatch!
+  id: UUID!
+}
+
+"""
+Represents an update to a `UserAuthentication`. Fields that are set will be updated.
+"""
+input UserAuthenticationPatch {
+  id: UUID
+  userId: UUID
+
+  """The login service used, e.g. `twitter` or `github`."""
+  service: String
+
+  """A unique identifier for the user within the login service."""
+  identifier: String
+
+  """Additional profile details extracted from this login method"""
+  details: JSON
+  createdAt: Datetime
+  updatedAt: Datetime
+}
+
+"""
+All input for the `updateUserAuthenticationByServiceAndIdentifier` mutation.
+"""
+input UpdateUserAuthenticationByServiceAndIdentifierInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  An object where the defined keys will be set on the `UserAuthentication` being updated.
+  """
+  patch: UserAuthenticationPatch!
+
+  """The login service used, e.g. `twitter` or `github`."""
+  service: String!
+
+  """A unique identifier for the user within the login service."""
+  identifier: String!
 }
 
 """The output of our update `User` mutation."""
@@ -917,6 +1270,60 @@ input UserPatch {
   isVerified: Boolean
   createdAt: Datetime
   updatedAt: Datetime
+}
+
+"""The output of our delete `UserAuthentication` mutation."""
+type DeleteUserAuthenticationPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `UserAuthentication` that was deleted by this mutation."""
+  userAuthentication: UserAuthentication
+  deletedUserAuthenticationNodeId: ID
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `User` that is related to this `UserAuthentication`."""
+  user: User
+
+  """An edge for our `UserAuthentication`. May be used by Relay 1."""
+  userAuthenticationEdge(
+    """The method to use when ordering `UserAuthentication`."""
+    orderBy: [UserAuthenticationsOrderBy!] = [PRIMARY_KEY_ASC]
+  ): UserAuthenticationsEdge
+}
+
+"""All input for the `deleteUserAuthentication` mutation."""
+input DeleteUserAuthenticationInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+  id: UUID!
+}
+
+"""
+All input for the `deleteUserAuthenticationByServiceAndIdentifier` mutation.
+"""
+input DeleteUserAuthenticationByServiceAndIdentifierInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """The login service used, e.g. `twitter` or `github`."""
+  service: String!
+
+  """A unique identifier for the user within the login service."""
+  identifier: String!
 }
 
 """The output of our delete `User` mutation."""
@@ -1037,11 +1444,6 @@ input LogInput {
   clientMutationId: String
   payload: JSON
 }
-
-"""
-The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-"""
-scalar JSON
 
 """The output of our `registerWithLoginPassword` mutation."""
 type RegisterWithLoginPasswordPayload {

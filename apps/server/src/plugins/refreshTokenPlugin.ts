@@ -31,10 +31,7 @@ const RefreshTokenPlugin = makeExtendSchemaPlugin(
     resolvers: {
       Mutation: {
         authenticate: async (_, args, context) => {
-          console.log(
-            "🚀 ~ file: refreshTokenPlugin.ts ~ line 28 ~ generateRefreshToken: ~ context",
-            context
-          );
+       
           const { email, password } = args.input;
           try {
             // Because this is auth, we use rootPgPool, which uses PostGraphile's role

@@ -109,6 +109,41 @@ export type CreateTestPayloadTestEdgeArgs = {
   orderBy?: InputMaybe<Array<TestsOrderBy>>;
 };
 
+/** All input for the create `UserAuthentication` mutation. */
+export type CreateUserAuthenticationInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The `UserAuthentication` to be created by this mutation. */
+  userAuthentication: UserAuthenticationInput;
+};
+
+/** The output of our create `UserAuthentication` mutation. */
+export type CreateUserAuthenticationPayload = {
+  __typename?: 'CreateUserAuthenticationPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `UserAuthentication`. */
+  user?: Maybe<User>;
+  /** The `UserAuthentication` that was created by this mutation. */
+  userAuthentication?: Maybe<UserAuthentication>;
+  /** An edge for our `UserAuthentication`. May be used by Relay 1. */
+  userAuthenticationEdge?: Maybe<UserAuthenticationsEdge>;
+};
+
+
+/** The output of our create `UserAuthentication` mutation. */
+export type CreateUserAuthenticationPayloadUserAuthenticationEdgeArgs = {
+  orderBy?: InputMaybe<Array<UserAuthenticationsOrderBy>>;
+};
+
 /** All input for the create `User` mutation. */
 export type CreateUserInput = {
   /**
@@ -140,6 +175,54 @@ export type CreateUserPayload = {
 /** The output of our create `User` mutation. */
 export type CreateUserPayloadUserEdgeArgs = {
   orderBy?: InputMaybe<Array<UsersOrderBy>>;
+};
+
+/** All input for the `deleteUserAuthenticationByServiceAndIdentifier` mutation. */
+export type DeleteUserAuthenticationByServiceAndIdentifierInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** A unique identifier for the user within the login service. */
+  identifier: Scalars['String'];
+  /** The login service used, e.g. `twitter` or `github`. */
+  service: Scalars['String'];
+};
+
+/** All input for the `deleteUserAuthentication` mutation. */
+export type DeleteUserAuthenticationInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  id: Scalars['UUID'];
+};
+
+/** The output of our delete `UserAuthentication` mutation. */
+export type DeleteUserAuthenticationPayload = {
+  __typename?: 'DeleteUserAuthenticationPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']>;
+  deletedUserAuthenticationNodeId?: Maybe<Scalars['ID']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `UserAuthentication`. */
+  user?: Maybe<User>;
+  /** The `UserAuthentication` that was deleted by this mutation. */
+  userAuthentication?: Maybe<UserAuthentication>;
+  /** An edge for our `UserAuthentication`. May be used by Relay 1. */
+  userAuthenticationEdge?: Maybe<UserAuthenticationsEdge>;
+};
+
+
+/** The output of our delete `UserAuthentication` mutation. */
+export type DeleteUserAuthenticationPayloadUserAuthenticationEdgeArgs = {
+  orderBy?: InputMaybe<Array<UserAuthenticationsOrderBy>>;
 };
 
 /** All input for the `deleteUser` mutation. */
@@ -237,8 +320,14 @@ export type Mutation = {
   createTest?: Maybe<CreateTestPayload>;
   /** Creates a single `User`. */
   createUser?: Maybe<CreateUserPayload>;
+  /** Creates a single `UserAuthentication`. */
+  createUserAuthentication?: Maybe<CreateUserAuthenticationPayload>;
   /** Deletes a single `User` using a unique key. */
   deleteUser?: Maybe<DeleteUserPayload>;
+  /** Deletes a single `UserAuthentication` using a unique key. */
+  deleteUserAuthentication?: Maybe<DeleteUserAuthenticationPayload>;
+  /** Deletes a single `UserAuthentication` using a unique key. */
+  deleteUserAuthenticationByServiceAndIdentifier?: Maybe<DeleteUserAuthenticationPayload>;
   /** If you've forgotten your password, give us one of your email addresses and we'll send you a reset token. Note this only works if you have added an email address! */
   forgotPassword?: Maybe<ForgotPasswordPayload>;
   generatePresignedPost?: Maybe<GeneratePresignedPostPayload>;
@@ -248,6 +337,10 @@ export type Mutation = {
   resetPassword?: Maybe<ResetPasswordPayload>;
   /** Updates a single `User` using a unique key and a patch. */
   updateUser?: Maybe<UpdateUserPayload>;
+  /** Updates a single `UserAuthentication` using a unique key and a patch. */
+  updateUserAuthentication?: Maybe<UpdateUserAuthenticationPayload>;
+  /** Updates a single `UserAuthentication` using a unique key and a patch. */
+  updateUserAuthenticationByServiceAndIdentifier?: Maybe<UpdateUserAuthenticationPayload>;
   /** Once you have received a verification token for your email, you may call this mutation with that token to make your email verified. */
   verifyEmail?: Maybe<VerifyEmailPayload>;
 };
@@ -272,8 +365,26 @@ export type MutationCreateUserArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreateUserAuthenticationArgs = {
+  input: CreateUserAuthenticationInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteUserArgs = {
   input: DeleteUserInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteUserAuthenticationArgs = {
+  input: DeleteUserAuthenticationInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteUserAuthenticationByServiceAndIdentifierArgs = {
+  input: DeleteUserAuthenticationByServiceAndIdentifierInput;
 };
 
 
@@ -310,6 +421,18 @@ export type MutationResetPasswordArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateUserArgs = {
   input: UpdateUserInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateUserAuthenticationArgs = {
+  input: UpdateUserAuthenticationInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateUserAuthenticationByServiceAndIdentifierArgs = {
+  input: UpdateUserAuthenticationByServiceAndIdentifierInput;
 };
 
 
@@ -353,6 +476,10 @@ export type Query = {
   /** Reads a set of `Test`. */
   testsList?: Maybe<Array<Test>>;
   user?: Maybe<User>;
+  userAuthentication?: Maybe<UserAuthentication>;
+  userAuthenticationByServiceAndIdentifier?: Maybe<UserAuthentication>;
+  /** Reads and enables pagination through a set of `UserAuthentication`. */
+  userAuthentications?: Maybe<UserAuthenticationsConnection>;
   userEmail?: Maybe<UserEmail>;
   userEmailByUserIdAndEmail?: Maybe<UserEmail>;
   /** Reads a set of `UserEmail`. */
@@ -400,6 +527,32 @@ export type QueryTestsListArgs = {
 /** The root query type which gives access points into the data universe. */
 export type QueryUserArgs = {
   id: Scalars['UUID'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryUserAuthenticationArgs = {
+  id: Scalars['UUID'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryUserAuthenticationByServiceAndIdentifierArgs = {
+  identifier: Scalars['String'];
+  service: Scalars['String'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryUserAuthenticationsArgs = {
+  after?: InputMaybe<Scalars['Cursor']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  condition?: InputMaybe<UserAuthenticationCondition>;
+  filter?: InputMaybe<UserAuthenticationFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<UserAuthenticationsOrderBy>>;
 };
 
 
@@ -666,6 +819,57 @@ export type UuidFilter = {
   notIn?: InputMaybe<Array<Scalars['UUID']>>;
 };
 
+/** All input for the `updateUserAuthenticationByServiceAndIdentifier` mutation. */
+export type UpdateUserAuthenticationByServiceAndIdentifierInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** A unique identifier for the user within the login service. */
+  identifier: Scalars['String'];
+  /** An object where the defined keys will be set on the `UserAuthentication` being updated. */
+  patch: UserAuthenticationPatch;
+  /** The login service used, e.g. `twitter` or `github`. */
+  service: Scalars['String'];
+};
+
+/** All input for the `updateUserAuthentication` mutation. */
+export type UpdateUserAuthenticationInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  id: Scalars['UUID'];
+  /** An object where the defined keys will be set on the `UserAuthentication` being updated. */
+  patch: UserAuthenticationPatch;
+};
+
+/** The output of our update `UserAuthentication` mutation. */
+export type UpdateUserAuthenticationPayload = {
+  __typename?: 'UpdateUserAuthenticationPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `UserAuthentication`. */
+  user?: Maybe<User>;
+  /** The `UserAuthentication` that was updated by this mutation. */
+  userAuthentication?: Maybe<UserAuthentication>;
+  /** An edge for our `UserAuthentication`. May be used by Relay 1. */
+  userAuthenticationEdge?: Maybe<UserAuthenticationsEdge>;
+};
+
+
+/** The output of our update `UserAuthentication` mutation. */
+export type UpdateUserAuthenticationPayloadUserAuthenticationEdgeArgs = {
+  orderBy?: InputMaybe<Array<UserAuthenticationsOrderBy>>;
+};
+
 /** All input for the `updateUser` mutation. */
 export type UpdateUserInput = {
   /**
@@ -723,6 +927,8 @@ export type User = {
   /** Reads and enables pagination through a set of `Test`. */
   testsList: Array<Test>;
   updatedAt: Scalars['Datetime'];
+  /** Reads and enables pagination through a set of `UserAuthentication`. */
+  userAuthentications: UserAuthenticationsConnection;
   /** Reads and enables pagination through a set of `UserEmail`. */
   userEmailsList: Array<UserEmail>;
 };
@@ -752,6 +958,19 @@ export type UserTestsListArgs = {
 
 
 /** A user who can log in to the application. */
+export type UserUserAuthenticationsArgs = {
+  after?: InputMaybe<Scalars['Cursor']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  condition?: InputMaybe<UserAuthenticationCondition>;
+  filter?: InputMaybe<UserAuthenticationFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<UserAuthenticationsOrderBy>>;
+};
+
+
+/** A user who can log in to the application. */
 export type UserUserEmailsListArgs = {
   condition?: InputMaybe<UserEmailCondition>;
   filter?: InputMaybe<UserEmailFilter>;
@@ -759,6 +978,115 @@ export type UserUserEmailsListArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Array<UserEmailsOrderBy>>;
 };
+
+/** Contains information about the login providers this user has used, so that they may disconnect them should they wish. */
+export type UserAuthentication = {
+  __typename?: 'UserAuthentication';
+  createdAt: Scalars['Datetime'];
+  /** Additional profile details extracted from this login method */
+  details: Scalars['JSON'];
+  id: Scalars['UUID'];
+  /** A unique identifier for the user within the login service. */
+  identifier: Scalars['String'];
+  /** The login service used, e.g. `twitter` or `github`. */
+  service: Scalars['String'];
+  updatedAt: Scalars['Datetime'];
+  /** Reads a single `User` that is related to this `UserAuthentication`. */
+  user?: Maybe<User>;
+  userId: Scalars['UUID'];
+};
+
+/**
+ * A condition to be used against `UserAuthentication` object types. All fields are
+ * tested for equality and combined with a logical ‘and.’
+ */
+export type UserAuthenticationCondition = {
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['UUID']>;
+  /** Checks for equality with the object’s `service` field. */
+  service?: InputMaybe<Scalars['String']>;
+  /** Checks for equality with the object’s `userId` field. */
+  userId?: InputMaybe<Scalars['UUID']>;
+};
+
+/** A filter to be used against `UserAuthentication` object types. All fields are combined with a logical ‘and.’ */
+export type UserAuthenticationFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<UserAuthenticationFilter>>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<UuidFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<UserAuthenticationFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<UserAuthenticationFilter>>;
+  /** Filter by the object’s `service` field. */
+  service?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `userId` field. */
+  userId?: InputMaybe<UuidFilter>;
+};
+
+/** An input for mutations affecting `UserAuthentication` */
+export type UserAuthenticationInput = {
+  createdAt?: InputMaybe<Scalars['Datetime']>;
+  /** Additional profile details extracted from this login method */
+  details?: InputMaybe<Scalars['JSON']>;
+  id?: InputMaybe<Scalars['UUID']>;
+  /** A unique identifier for the user within the login service. */
+  identifier: Scalars['String'];
+  /** The login service used, e.g. `twitter` or `github`. */
+  service: Scalars['String'];
+  updatedAt?: InputMaybe<Scalars['Datetime']>;
+  userId: Scalars['UUID'];
+};
+
+/** Represents an update to a `UserAuthentication`. Fields that are set will be updated. */
+export type UserAuthenticationPatch = {
+  createdAt?: InputMaybe<Scalars['Datetime']>;
+  /** Additional profile details extracted from this login method */
+  details?: InputMaybe<Scalars['JSON']>;
+  id?: InputMaybe<Scalars['UUID']>;
+  /** A unique identifier for the user within the login service. */
+  identifier?: InputMaybe<Scalars['String']>;
+  /** The login service used, e.g. `twitter` or `github`. */
+  service?: InputMaybe<Scalars['String']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']>;
+  userId?: InputMaybe<Scalars['UUID']>;
+};
+
+/** A connection to a list of `UserAuthentication` values. */
+export type UserAuthenticationsConnection = {
+  __typename?: 'UserAuthenticationsConnection';
+  /** A list of edges which contains the `UserAuthentication` and cursor to aid in pagination. */
+  edges: Array<UserAuthenticationsEdge>;
+  /** A list of `UserAuthentication` objects. */
+  nodes: Array<UserAuthentication>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `UserAuthentication` you could get from the connection. */
+  totalCount: Scalars['Int'];
+};
+
+/** A `UserAuthentication` edge in the connection. */
+export type UserAuthenticationsEdge = {
+  __typename?: 'UserAuthenticationsEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']>;
+  /** The `UserAuthentication` at the end of the edge. */
+  node: UserAuthentication;
+};
+
+/** Methods to use when ordering `UserAuthentication`. */
+export enum UserAuthenticationsOrderBy {
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  ServiceAsc = 'SERVICE_ASC',
+  ServiceDesc = 'SERVICE_DESC',
+  UserIdAsc = 'USER_ID_ASC',
+  UserIdDesc = 'USER_ID_DESC'
+}
 
 /** A condition to be used against `User` object types. All fields are tested for equality and combined with a logical ‘and.’ */
 export type UserCondition = {

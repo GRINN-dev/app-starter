@@ -19,11 +19,9 @@ const AuthPage: NextPage = () => {
           const { data: res } = await authenticate({
             variables: { input: data },
           });
+
           const { access_token } = res.authenticate;
-          console.log(
-            "🚀 ~ file: auth.tsx ~ line 23 ~ onSubmit={ ~ access_token",
-            access_token
-          );
+
           localStorage.setItem("token", access_token);
           /*
           loadCurrentUser({

@@ -16,6 +16,7 @@ export const installCookieJWT = (app: Express) => {
         const payload = verify(token, REFRESH_TOKEN_SECRET!, {
           algorithms: ["HS256"],
         });
+        console.log("🚀 ~ file: installCookieJWT.ts ~ line 19 ~ app.post ~ payload", payload.sub)
         // user lookup - if user was deleted, they no longer get a token
         const { rows } = await rootPgPool.query(
           ` SELECT user_id AS sub FROM priv.user_secrets 
@@ -59,4 +60,5 @@ export const installCookieJWT = (app: Express) => {
 
     return res.send({ ok: false, accessToken: "" });
   });
+
 };
