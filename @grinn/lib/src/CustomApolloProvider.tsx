@@ -29,7 +29,7 @@ export default function CustomApolloProvider(props: CustomApolloProviderProps) {
       const headerWithAuth = {
         ...headers,
         //authorization: token ? `Bearer ${token}` : "",
-        authorization: "Bearer " + token,
+        Authorization: "Bearer " + token,
       };
       return {
         headers: token ? headerWithAuth : headers,
