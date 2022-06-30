@@ -3,50 +3,195 @@ import {
   HttpLink,
   InMemoryCache,
   ApolloProvider,
+  ApolloLink,
+  Observable,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { Children, createContext, useMemo } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { apolloClient } from "./apolloClient";
+import { TokenContext } from "./ApolloProvider";
+import jwtDecode from "jwt-decode";
+import { TokenRefreshLink } from "apollo-link-token-refresh";
+import { onError } from "@apollo/client/link/error";
 
 interface CustomApolloProviderProps {
   endpoint: string;
+  setAccessToken: (token: string) => void;
   getAccessToken: () => string;
   children: React.ReactNode;
 }
+
+export type Token = {
+  sub: string;
+  iss?: string;
+  exp?: string;
+  aud?: string;
+};
 
 // The name here doesn't really matters.
 export default function CustomApolloProvider(props: CustomApolloProviderProps) {
   // Whenever the token changes, the component re-renders, thus updating the ref.
   //tokenRef.current = token;
+  const accessToken = useContext(TokenContext);
+  console.log("contexte : ", accessToken);
+  /*
+  useEffect(() => {
+    console.log("efetc : ", accessToken);
+    requestLink = getRequestLink();
+  }, [accessToken]);
+*/
+  const requestLink = new ApolloLink(
+    (operation, forward) =>
+      new Observable(observer => {
+        console.log("op header : ", accessToken);
+        let handle: any;
+        Promise.resolve(operation)
+          .then(operation => {
+            if (accessToken) {
+              operation.setContext({
+                headers: {
+                  Authorization: `Bearer ${accessToken}`,
+                },
+              });
+            }
+          })
+          .then(() => {
+            handle =
+              forward &&
+              forward(operation).subscribe({
+                next: observer.next.bind(observer),
+                error: observer.error.bind(observer),
+                complete: observer.complete.bind(observer),
+              });
+          })
+          .catch(observer.error.bind(observer));
+
+        return () => {
+          console.log("op header return : ", accessToken);
+          if (handle) handle.unsubscribe();
+        };
+      })
+  );
+
+  const getRequestLink = () => {
+    console.log("op header 1: ", accessToken);
+    return new ApolloLink(
+      (operation, forward) =>
+        new Observable(observer => {
+          console.log("op header : ", accessToken);
+          let handle: any;
+          Promise.resolve(operation)
+            .then(operation => {
+              if (accessToken) {
+                operation.setContext({
+                  headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                  },
+                });
+              }
+            })
+            .then(() => {
+              handle =
+                forward &&
+                forward(operation).subscribe({
+                  next: observer.next.bind(observer),
+                  error: observer.error.bind(observer),
+                  complete: observer.complete.bind(observer),
+                });
+            })
+            .catch(observer.error.bind(observer));
+
+          return () => {
+            console.log("op header return : ", accessToken);
+            if (handle) handle.unsubscribe();
+          };
+        })
+    );
+  };
+
+  const tokenLink = new TokenRefreshLink({
+    isTokenValidOrUndefined: () => {
+      const token = accessToken;
+
+      if (!token) {
+        return true;
+      }
+
+      try {
+        const { exp } = jwtDecode<Token>(token);
+        if (exp && Date.now() >= parseInt(exp) * 1000) {
+          return false;
+        } else {
+          return true;
+        }
+      } catch (err) {
+        return false;
+      }
+    },
+    fetchAccessToken: () =>
+      fetch("http://localhost:8000/access_token", {
+        method: "POST",
+        credentials: "include",
+      }),
+    handleFetch: access_token => {
+      props.setAccessToken(access_token);
+    },
+    handleError: err => {
+      console.warn("Your refresh token is invalid. Please try re-logging in.");
+      console.error(err);
+    },
+  });
+
+  const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
+    if (graphQLErrors) {
+      for (let err of graphQLErrors) {
+        console.error(
+          "[GraphQL error]: Message:",
+          err.message,
+          "Location(s):",
+          err.locations,
+          "Path:",
+          err.path
+        );
+      }
+    }
+    if (networkError) {
+      console.warn(
+        "[Network error]:",
+        networkError,
+        "Operation:",
+        operation.operationName
+      );
+    }
+  });
 
   // Ensure that the client is only created once.
+  /*
   const client = () => {
     const authLink = setContext((_, { headers }) => {
-      // get the authentication token from local storage if it exists
-      const token = props.getAccessToken();
-      console.log("apollo props token : ", props.getAccessToken());
       // return the headers to the context so httpLink can read them
       const headerWithAuth = {
         ...headers,
         //authorization: token ? `Bearer ${token}` : "",
-        Authorization: "Bearer " + token,
+        Authorization: "Bearer " + accessToken,
       };
       return {
-        headers: token ? headerWithAuth : headers,
+        headers: accessToken ? headerWithAuth : headers,
       };
     });
+    */
 
-    const httpLink = (endpoint: string) => {
-      return new HttpLink({
-        uri: endpoint,
-      });
-    };
+  const httpLink = new HttpLink({
+    uri: props.endpoint,
+    credentials: "include",
+  });
 
-    return new ApolloClient({
-      link: authLink.concat(httpLink(props.endpoint)),
-      cache: new InMemoryCache(),
-    });
-  };
+  const client = new ApolloClient({
+    //link: authLink.concat(httpLink(props.endpoint)),
+    //cache: new InMemoryCache(),
+    link: ApolloLink.from([tokenLink, errorLink, requestLink, httpLink]),
+    cache: new InMemoryCache(),
+  });
 
-  return <ApolloProvider client={client()}>{props.children}</ApolloProvider>;
+  return <ApolloProvider client={client}>{props.children}</ApolloProvider>;
 }
