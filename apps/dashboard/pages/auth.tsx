@@ -6,13 +6,14 @@ import {
   useGetCurrentUserLazyQuery,
   useGetCurrentUserQuery,
 } from "@grinn/graphql-generated";
-import { getAccessToken, setAccessToken } from "../lib/accessToken";
+import { useContext } from "react";
+import { TokenContext } from "@grinn/lib";
 
 const AuthPage: NextPage = () => {
   const router = useRouter();
   const [authenticate] = useAuthenticateMutation();
   const [loadCurrentUser] = useGetCurrentUserLazyQuery({});
-
+  const { accessToken, setAccessToken } = useContext(TokenContext);
   return (
     <div className="flex justify-center">
       <LoginForm
@@ -27,15 +28,9 @@ const AuthPage: NextPage = () => {
           );
           console.log("auth");
           setAccessToken(access_token);
-          console.log("auth get tok : ", getAccessToken());
-          //localStorage.setItem("token", access_token);
+          console.log("auth get tok : ", accessToken);
 
           loadCurrentUser({
-            /*
-            context: {
-              Headers: { Authorization: "Bearer " + jwt },
-            },
-            */
             fetchPolicy: "network-only",
           }).then(data => {
             console.log("user", data);

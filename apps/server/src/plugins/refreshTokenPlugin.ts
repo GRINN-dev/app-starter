@@ -28,10 +28,6 @@ const RefreshTokenPlugin = makeExtendSchemaPlugin(
     resolvers: {
       Mutation: {
         authenticate: async (_, args, context) => {
-          console.log(
-            "🚀 ~ file: refreshTokenPlugin.ts ~ line 28 ~ generateRefreshToken: ~ context",
-            context
-          );
           const { email, password } = args.input;
           try {
             // Because this is auth, we use rootPgPool, which uses PostGraphile's role
@@ -111,8 +107,9 @@ export const signToken = (
 
 export const sendRefreshToken = (res: Response, token: string) => {
   res.cookie("qid", token, {
-    httpOnly: true,
+    //httpOnly: true,
     sameSite: false, // if you're on a single origin, this may help prevent CSRF attacks
-    path: "/refresh_token",
+    path: process.env.NODE_ENV === "production" ? "/refresh_token" : "/",
+    secure: process.env.NODE_ENV === "production",
   });
 };

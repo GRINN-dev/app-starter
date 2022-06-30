@@ -2,12 +2,14 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 
 import "@grinn/styles/dist/output.css";
-import { ApolloProviderWrapper } from "@grinn/lib";
+import { ApolloProviderWrapper, TokenContext } from "@grinn/lib";
 import { setAccessToken, getAccessToken } from "../lib/accessToken";
 
 import "react-circular-progressbar/dist/styles.css";
 import Script from "next/script";
+import { useState } from "react";
 function MyApp({ Component, pageProps }) {
+  const [myAccessToken, setMyAccessToken] = useState("");
   return (
     <>
       <Head>
@@ -25,14 +27,15 @@ function MyApp({ Component, pageProps }) {
         />
       </Head>
       <Script src="https://apis.google.com/js/platform.js"></Script>
-
-      <ApolloProviderWrapper
-        endpoint={process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT}
-        setAccessToken={setAccessToken}
-        getAccessToken={getAccessToken}
+      <TokenContext.Provider
+        value={{ accessToken: myAccessToken, setAccessToken: setMyAccessToken }}
       >
-        <Component {...pageProps} />
-      </ApolloProviderWrapper>
+        <ApolloProviderWrapper
+          endpoint={process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT}
+        >
+          <Component {...pageProps} />
+        </ApolloProviderWrapper>
+      </TokenContext.Provider>
     </>
   );
 }

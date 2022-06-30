@@ -6,9 +6,7 @@ import {
   ApolloLink,
   Observable,
 } from "@apollo/client";
-import { setContext } from "@apollo/client/link/context";
-import { createContext, useContext, useEffect, useState } from "react";
-import { apolloClient } from "./apolloClient";
+import { useContext } from "react";
 import { TokenContext } from "./ApolloProvider";
 import jwtDecode from "jwt-decode";
 import { TokenRefreshLink } from "apollo-link-token-refresh";
@@ -16,8 +14,6 @@ import { onError } from "@apollo/client/link/error";
 
 interface CustomApolloProviderProps {
   endpoint: string;
-  setAccessToken: (token: string) => void;
-  getAccessToken: () => string;
   children: React.ReactNode;
 }
 
@@ -32,7 +28,7 @@ export type Token = {
 export default function CustomApolloProvider(props: CustomApolloProviderProps) {
   // Whenever the token changes, the component re-renders, thus updating the ref.
   //tokenRef.current = token;
-  const accessToken = useContext(TokenContext);
+  const { accessToken, setAccessToken } = useContext(TokenContext);
   console.log("contexte : ", accessToken);
   /*
   useEffect(() => {
@@ -134,7 +130,7 @@ export default function CustomApolloProvider(props: CustomApolloProviderProps) {
         credentials: "include",
       }),
     handleFetch: access_token => {
-      props.setAccessToken(access_token);
+      setAccessToken(access_token);
     },
     handleError: err => {
       console.warn("Your refresh token is invalid. Please try re-logging in.");
