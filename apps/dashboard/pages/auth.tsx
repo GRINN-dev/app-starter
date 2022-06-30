@@ -26,14 +26,11 @@ const AuthPage: NextPage = () => {
             "🚀 ~ file: auth.tsx ~ line 23 ~ onSubmit={ ~ jwt",
             access_token
           );
-          console.log("auth");
           setAccessToken(access_token);
-          console.log("auth get tok : ", accessToken);
 
           loadCurrentUser({
             fetchPolicy: "network-only",
           }).then(data => {
-            console.log("user", data);
             !data?.data?.currentUser?.isAdmin
               ? router.replace("/dashboard")
               : router.replace("/dashboard-admin");
