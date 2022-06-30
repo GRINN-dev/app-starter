@@ -1,15 +1,33 @@
 import Head from "next/head";
-import { useRouter } from "next/router";
 
 import "@grinn/styles/dist/output.css";
 import { ApolloProviderWrapper, TokenContext } from "@grinn/lib";
-import { setAccessToken, getAccessToken } from "../lib/accessToken";
 
 import "react-circular-progressbar/dist/styles.css";
 import Script from "next/script";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 function MyApp({ Component, pageProps }) {
   const [myAccessToken, setMyAccessToken] = useState("");
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    // intended to be called when <App /> mounts, normally init time.
+    // If a valid refresh_token is in the cookie, we fetch and store an access_token
+    fetch("http://localhost:8000/refresh_token", {
+      method: "POST",
+      credentials: "include",
+    })
+      .then(async response => {
+        const { access_token } = await response.json();
+        setMyAccessToken(access_token); // store in browser/page memory only, not persisted to local storage
+        // setUser({email})
+      })
+      .catch(err => {
+        console.error("unable to connect to auth server", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
   return (
     <>
       <Head>
