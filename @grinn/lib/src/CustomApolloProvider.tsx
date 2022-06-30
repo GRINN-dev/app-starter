@@ -5,7 +5,7 @@ import {
   ApolloProvider,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { Children, useMemo } from "react";
+import { Children, createContext, useMemo } from "react";
 import { apolloClient } from "./apolloClient";
 
 interface CustomApolloProviderProps {
@@ -20,7 +20,7 @@ export default function CustomApolloProvider(props: CustomApolloProviderProps) {
   //tokenRef.current = token;
 
   // Ensure that the client is only created once.
-  const client = useMemo(() => {
+  const client = () => {
     const authLink = setContext((_, { headers }) => {
       // get the authentication token from local storage if it exists
       const token = props.getAccessToken();
@@ -46,7 +46,7 @@ export default function CustomApolloProvider(props: CustomApolloProviderProps) {
       link: authLink.concat(httpLink(props.endpoint)),
       cache: new InMemoryCache(),
     });
-  }, []);
+  };
 
-  return <ApolloProvider client={client}>{props.children}</ApolloProvider>;
+  return <ApolloProvider client={client()}>{props.children}</ApolloProvider>;
 }

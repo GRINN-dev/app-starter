@@ -7,7 +7,6 @@ import { Express, Response } from "express";
 const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } = process.env;
 export interface Token {
   sub: string;
-  role: string;
   iss?: string;
   exp?: string;
   aud?: string;
@@ -89,7 +88,6 @@ export const signToken = (
 ) => {
   const token: Token = {
     sub, // the sub, aka 'subscriber id', comes from account.person_id
-    role: "demo_authenticated", // _must_ match the role in SQL as defined by generate_token_plaintext() function
   };
 
   return sign(

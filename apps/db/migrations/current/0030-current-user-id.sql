@@ -7,3 +7,4 @@ create function publ.current_user_id() returns uuid as $$
 $$ language sql stable;
 comment on function publ.current_user_id() is
   E'Handy method to get the current user ID.';
+  grant execute on function publ.current_user_id to :DATABASE_VISITOR;
