@@ -29,7 +29,7 @@ begin
 
   -- Insert the new user
   insert into publ.users (first_name, last_name, avatar_url) values
-    (first_name, last_name, null)
+    (first_name, last_name, avatar_url)
     returning * into v_user;
 
 	-- Add the user's email

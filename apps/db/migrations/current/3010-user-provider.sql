@@ -76,39 +76,39 @@ create function priv.register_user(
 declare
   v_user publ.users;
   v_email citext;
-  v_name text;
-  v_username citext;
+  v_first_name text;
+  v_last_name citext;
   v_avatar_url text;
   v_user_authentication_id uuid;
 begin
   -- Extract data from the user’s OAuth profile data.
   v_email := f_profile ->> 'email';
-  v_name := f_profile ->> 'name';
-  v_username := f_profile ->> 'username';
+  v_first_name := f_profile ->> 'first_name';
+  v_last_name := f_profile ->> 'last_name';
   v_avatar_url := f_profile ->> 'avatar_url';
 
   -- Sanitise the username, and make it unique if necessary.
-  if v_username is null then
-    v_username = coalesce(v_name, 'user');
+  if v_last_name is null then
+    v_last_name = coalesce(v_first_name, 'user');
   end if;
-  v_username = regexp_replace(v_username, '^[^a-z]+', '', 'gi');
-  v_username = regexp_replace(v_username, '[^a-z0-9]+', '_', 'gi');
-  if v_username is null or length(v_username) < 3 then
-    v_username = 'user';
+  v_last_name = regexp_replace(v_last_name, '^[^a-z]+', '', 'gi');
+  v_last_name = regexp_replace(v_last_name, '[^a-z0-9]+', '_', 'gi');
+  if v_last_name is null or length(v_last_name) < 3 then
+    v_last_name = 'user';
   end if;
   select (
     case
-    when i = 0 then v_username
-    else v_username || i::text
+    when i = 0 then v_last_name
+    else v_last_name || i::text
     end
-  ) into v_username from generate_series(0, 1000) i
+  ) into v_last_name from generate_series(0, 1000) i
   where not exists(
     select 1
     from publ.users
-    where users.username = (
+    where users.first_name = (
       case
-      when i = 0 then v_username
-      else v_username || i::text
+      when i = 0 then v_last_name
+      else v_last_name || i::text
       end
     )
   )
@@ -116,10 +116,10 @@ begin
 
   -- Create the user account
   v_user = priv.really_create_user(
-    username => v_username,
+    first_name => v_last_name,
+    last_name => v_first_name,
     email => v_email,
     email_is_verified => f_email_is_verified,
-    name => v_name,
     avatar_url => v_avatar_url
   );
 
@@ -163,7 +163,7 @@ declare
   v_matched_user_id uuid;
   v_matched_authentication_id uuid;
   v_email citext;
-  v_name text;
+  v_first_name text;
   v_avatar_url text;
   v_user publ.users;
   v_user_email publ.user_emails;
@@ -181,7 +181,7 @@ begin
   end if;
 
   v_email = f_profile ->> 'email';
-  v_name := f_profile ->> 'name';
+  v_first_name := f_profile ->> 'last_name';
   v_avatar_url := f_profile ->> 'avatar_url';
 
   if v_matched_authentication_id is null then
@@ -234,7 +234,7 @@ begin
         where user_authentication_id = v_matched_authentication_id;
       update publ.users
         set
-          name = coalesce(users.name, v_name),
+          last_name = coalesce(users.last_name, v_first_name),
           avatar_url = coalesce(users.avatar_url, v_avatar_url)
         where id = v_matched_user_id
         returning  * into v_user;
