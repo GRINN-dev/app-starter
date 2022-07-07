@@ -2,12 +2,15 @@ import Head from "next/head";
 
 import "@grinn/styles/dist/output.css";
 import { ApolloProviderWrapper, TokenContext } from "@grinn/lib";
+import { UserContext } from "./auth";
 
 import "react-circular-progressbar/dist/styles.css";
 import Script from "next/script";
 import { useEffect, useState } from "react";
+import { useContext } from "react";
 function MyApp({ Component, pageProps }) {
   const [myAccessToken, setMyAccessToken] = useState("");
+  const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     // intended to be called when <App /> mounts, normally init time.
@@ -51,7 +54,9 @@ function MyApp({ Component, pageProps }) {
         <ApolloProviderWrapper
           endpoint={process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT}
         >
-          <Component {...pageProps} />
+          <UserContext.Provider value={{ user: user, setUser: setUser }}>
+            <Component {...pageProps} />
+          </UserContext.Provider>
         </ApolloProviderWrapper>
       </TokenContext.Provider>
     </>
