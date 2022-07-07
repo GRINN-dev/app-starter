@@ -1,4 +1,5 @@
 import { Express } from "express";
+import { ServerResponse, IncomingMessage } from "http";
 import postgraphile, { PostGraphileOptions } from "postgraphile";
 import PgSimplifyInflectorPlugin from "@graphile-contrib/pg-simplify-inflector";
 import { GeneratePresignedUrl, JokeOfDay } from "../plugins";
@@ -7,6 +8,7 @@ import { getRootPgPool } from "./installDatabasePools";
 import { resolve } from "path";
 import ConnectionFilterPlugin from "postgraphile-plugin-connection-filter";
 import { NodePlugin } from "graphile-build";
+import RefreshTokenPlugin from "../plugins/refreshTokenPlugin";
 
 import { makePgSmartTagsFromFilePlugin } from "postgraphile/plugins";
 
@@ -21,6 +23,8 @@ const TagsFilePlugin = makePgSmartTagsFromFilePlugin(
 export interface OurGraphQLContext {
   pgClient: PoolClient;
   rootPgPool: Pool;
+  res: ServerResponse;
+  req: IncomingMessage;
 }
 
 const postgraphileDevelopmentOptions: PostGraphileOptions = {
@@ -55,16 +59,18 @@ const getPostgraphileOptions = (rootPgPool: Pool): PostGraphileOptions => {
       GeneratePresignedUrl,
       ConnectionFilterPlugin,
       TagsFilePlugin,
+      RefreshTokenPlugin,
     ],
     enableQueryBatching: true,
     legacyRelations: "omit",
     pgDefaultRole: process.env.DATABASE_VISITOR,
     jwtPgTypeIdentifier: "publ.jwt",
-    jwtSecret: "gdztrgdskqhfge",
+    jwtSecret: process.env.ACCESS_TOKEN_SECRET,
     additionalGraphQLContextFromRequest: async (
-      req
+      req,
+      res
     ): Promise<Partial<OurGraphQLContext>> => {
-      return { rootPgPool };
+      return { rootPgPool, res, req };
     },
     ...(isDev ? postgraphileDevelopmentOptions : postgraphileProductionOptions),
 

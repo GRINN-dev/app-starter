@@ -742,12 +742,6 @@ type Mutation {
     """
     input: DeleteUserInput!
   ): DeleteUserPayload
-  authenticate(
-    """
-    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
-    """
-    input: AuthenticateInput!
-  ): AuthenticatePayload
   createTest(
     """
     The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
@@ -800,6 +794,12 @@ type Mutation {
     """
     input: GeneratePresignedPostInput!
   ): GeneratePresignedPostPayload
+  authenticate(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: AuthenticateInput!
+  ): AuthenticatePayload
 }
 
 """The output of our create `User` mutation."""
@@ -953,38 +953,6 @@ input DeleteUserInput {
 
   """Unique identifier for the user."""
   id: UUID!
-}
-
-"""The output of our `authenticate` mutation."""
-type AuthenticatePayload {
-  """
-  The exact same `clientMutationId` that was provided in the mutation input,
-  unchanged and unused. May be used by a client to track mutations.
-  """
-  clientMutationId: String
-  jwt: Jwt
-
-  """
-  Our root query field type. Allows us to run any query from our mutation payload.
-  """
-  query: Query
-}
-
-"""
-A JSON Web Token defined by [RFC 7519](https://tools.ietf.org/html/rfc7519)
-which securely represents claims between two parties.
-"""
-scalar Jwt
-
-"""All input for the `authenticate` mutation."""
-input AuthenticateInput {
-  """
-  An arbitrary string value with no semantic meaning. Will be included in the
-  payload verbatim. May be used to track mutations by the client.
-  """
-  clientMutationId: String
-  email: String
-  password: String
 }
 
 """The output of our `createTest` mutation."""
@@ -1163,4 +1131,13 @@ type GeneratePresignedPostPayload {
 
 input GeneratePresignedPostInput {
   key: String!
+}
+
+type AuthenticatePayload {
+  access_token: String!
+}
+
+input AuthenticateInput {
+  email: String!
+  password: String!
 }

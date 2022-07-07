@@ -6,9 +6,9 @@ export const installCors = (app: Express) => {
     cors({
       origin: [
         "null",
-        "http://localhost:3000",
-        "http://localhost:3001",
-        "http://localhost:3002",
+        // "http://localhost:3000",
+        // "http://localhost:3001",
+        "http://localhost:6785",
         "http://localhost:3003",
         /\.grinn\.com$/,
         // regexp for grinn + anything + 'vercel.app'
