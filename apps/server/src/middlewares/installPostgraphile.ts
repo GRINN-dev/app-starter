@@ -65,7 +65,7 @@ const getPostgraphileOptions = (rootPgPool: Pool): PostGraphileOptions => {
     legacyRelations: "omit",
     pgDefaultRole: process.env.DATABASE_VISITOR,
     jwtPgTypeIdentifier: "publ.jwt",
-    jwtSecret: "gdztrgdskqhfge",
+    jwtSecret: process.env.ACCESS_TOKEN_SECRET,
     additionalGraphQLContextFromRequest: async (
       req,
       res
