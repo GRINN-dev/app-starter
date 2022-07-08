@@ -1,6 +1,4 @@
-"""
-The root query type which gives access points into the data universe.
-"""
+"""The root query type which gives access points into the data universe."""
 type Query {
   """
   Exposes the root query type nested one level down. This is helpful for Relay 1
@@ -8,18 +6,12 @@ type Query {
   """
   query: Query!
 
-  """
-  Reads and enables pagination through a set of `Test`.
-  """
+  """Reads and enables pagination through a set of `Test`."""
   tests(
-    """
-    Only read the first `n` values of the set.
-    """
+    """Only read the first `n` values of the set."""
     first: Int
 
-    """
-    Only read the last `n` values of the set.
-    """
+    """Only read the last `n` values of the set."""
     last: Int
 
     """
@@ -28,19 +20,13 @@ type Query {
     """
     offset: Int
 
-    """
-    Read all values in the set before (above) this cursor.
-    """
+    """Read all values in the set before (above) this cursor."""
     before: Cursor
 
-    """
-    Read all values in the set after (below) this cursor.
-    """
+    """Read all values in the set after (below) this cursor."""
     after: Cursor
 
-    """
-    The method to use when ordering `Test`.
-    """
+    """The method to use when ordering `Test`."""
     orderBy: [TestsOrderBy!] = [PRIMARY_KEY_ASC]
 
     """
@@ -54,23 +40,15 @@ type Query {
     filter: TestFilter
   ): TestsConnection
 
-  """
-  Reads a set of `Test`.
-  """
+  """Reads a set of `Test`."""
   testsList(
-    """
-    Only read the first `n` values of the set.
-    """
+    """Only read the first `n` values of the set."""
     first: Int
 
-    """
-    Skip the first `n` values.
-    """
+    """Skip the first `n` values."""
     offset: Int
 
-    """
-    The method to use when ordering `Test`.
-    """
+    """The method to use when ordering `Test`."""
     orderBy: [TestsOrderBy!]
 
     """
@@ -84,18 +62,12 @@ type Query {
     filter: TestFilter
   ): [Test!]
 
-  """
-  Reads and enables pagination through a set of `UserAuthentication`.
-  """
+  """Reads and enables pagination through a set of `UserAuthentication`."""
   userAuthentications(
-    """
-    Only read the first `n` values of the set.
-    """
+    """Only read the first `n` values of the set."""
     first: Int
 
-    """
-    Only read the last `n` values of the set.
-    """
+    """Only read the last `n` values of the set."""
     last: Int
 
     """
@@ -104,19 +76,13 @@ type Query {
     """
     offset: Int
 
-    """
-    Read all values in the set before (above) this cursor.
-    """
+    """Read all values in the set before (above) this cursor."""
     before: Cursor
 
-    """
-    Read all values in the set after (below) this cursor.
-    """
+    """Read all values in the set after (below) this cursor."""
     after: Cursor
 
-    """
-    The method to use when ordering `UserAuthentication`.
-    """
+    """The method to use when ordering `UserAuthentication`."""
     orderBy: [UserAuthenticationsOrderBy!] = [PRIMARY_KEY_ASC]
 
     """
@@ -130,23 +96,15 @@ type Query {
     filter: UserAuthenticationFilter
   ): UserAuthenticationsConnection
 
-  """
-  Reads a set of `UserEmail`.
-  """
+  """Reads a set of `UserEmail`."""
   userEmailsList(
-    """
-    Only read the first `n` values of the set.
-    """
+    """Only read the first `n` values of the set."""
     first: Int
 
-    """
-    Skip the first `n` values.
-    """
+    """Skip the first `n` values."""
     offset: Int
 
-    """
-    The method to use when ordering `UserEmail`.
-    """
+    """The method to use when ordering `UserEmail`."""
     orderBy: [UserEmailsOrderBy!]
 
     """
@@ -160,18 +118,12 @@ type Query {
     filter: UserEmailFilter
   ): [UserEmail!]
 
-  """
-  Reads and enables pagination through a set of `User`.
-  """
+  """Reads and enables pagination through a set of `User`."""
   users(
-    """
-    Only read the first `n` values of the set.
-    """
+    """Only read the first `n` values of the set."""
     first: Int
 
-    """
-    Only read the last `n` values of the set.
-    """
+    """Only read the last `n` values of the set."""
     last: Int
 
     """
@@ -180,19 +132,13 @@ type Query {
     """
     offset: Int
 
-    """
-    Read all values in the set before (above) this cursor.
-    """
+    """Read all values in the set before (above) this cursor."""
     before: Cursor
 
-    """
-    Read all values in the set after (below) this cursor.
-    """
+    """Read all values in the set after (below) this cursor."""
     after: Cursor
 
-    """
-    The method to use when ordering `User`.
-    """
+    """The method to use when ordering `User`."""
     orderBy: [UsersOrderBy!] = [PRIMARY_KEY_ASC]
 
     """
@@ -207,22 +153,15 @@ type Query {
   ): UsersConnection
   test(id: UUID!): Test
   userAuthentication(id: UUID!): UserAuthentication
-  userAuthenticationByServiceAndIdentifier(
-    service: String!
-    identifier: String!
-  ): UserAuthentication
+  userAuthenticationByServiceAndIdentifier(service: String!, identifier: String!): UserAuthentication
   userEmail(id: UUID!): UserEmail
   userEmailByUserIdAndEmail(userId: UUID!, email: String!): UserEmail
   user(id: UUID!): User
 
-  """
-  The currently logged in user is admin (or null if not logged in).
-  """
+  """The currently logged in user is admin (or null if not logged in)."""
   currentUser: User
 
-  """
-  Handy method to get the current user ID.
-  """
+  """Handy method to get the current user ID."""
   currentUserId: UUID
   currentUserIsAdmin: Boolean
   selectUsersNamedLouis: User
@@ -230,13 +169,9 @@ type Query {
   getChuckNorrisJokeByCategory(input: ChuckNorrisJokeCategory): ChuckNorrisJoke
 }
 
-"""
-A connection to a list of `Test` values.
-"""
+"""A connection to a list of `Test` values."""
 type TestsConnection {
-  """
-  A list of `Test` objects.
-  """
+  """A list of `Test` objects."""
   nodes: [Test!]!
 
   """
@@ -244,20 +179,14 @@ type TestsConnection {
   """
   edges: [TestsEdge!]!
 
-  """
-  Information to aid in pagination.
-  """
+  """Information to aid in pagination."""
   pageInfo: PageInfo!
 
-  """
-  The count of *all* `Test` you could get from the connection.
-  """
+  """The count of *all* `Test` you could get from the connection."""
   totalCount: Int!
 }
 
-"""
-ma table de tests
-"""
+"""ma table de tests"""
 type Test {
   id: UUID!
   testString: String!
@@ -265,9 +194,7 @@ type Test {
   createdAt: Datetime!
   updatedAt: Datetime!
 
-  """
-  Reads a single `User` that is related to this `Test`.
-  """
+  """Reads a single `User` that is related to this `Test`."""
   user: User
 }
 
@@ -282,55 +209,35 @@ A point in time as described by the [ISO
 """
 scalar Datetime
 
-"""
-A user who can log in to the application.
-"""
+"""A user who can log in to the application."""
 type User {
-  """
-  Unique identifier for the user.
-  """
+  """Unique identifier for the user."""
   id: UUID!
 
-  """
-  Public-facing firstname of the user.
-  """
+  """Public-facing firstname of the user."""
   firstName: String!
 
-  """
-  Public-facing lastname of the user.
-  """
+  """Public-facing lastname of the user."""
   lastName: String!
 
-  """
-  Optional avatar URL.
-  """
+  """Optional avatar URL."""
   avatarUrl: String
 
-  """
-  If true, the user has elevated privileges.
-  """
+  """If true, the user has elevated privileges."""
   isAdmin: Boolean!
   isVerified: Boolean!
   createdAt: Datetime!
   updatedAt: Datetime!
 
-  """
-  Reads and enables pagination through a set of `UserEmail`.
-  """
+  """Reads and enables pagination through a set of `UserEmail`."""
   userEmailsList(
-    """
-    Only read the first `n` values of the set.
-    """
+    """Only read the first `n` values of the set."""
     first: Int
 
-    """
-    Skip the first `n` values.
-    """
+    """Skip the first `n` values."""
     offset: Int
 
-    """
-    The method to use when ordering `UserEmail`.
-    """
+    """The method to use when ordering `UserEmail`."""
     orderBy: [UserEmailsOrderBy!]
 
     """
@@ -344,18 +251,12 @@ type User {
     filter: UserEmailFilter
   ): [UserEmail!]!
 
-  """
-  Reads and enables pagination through a set of `Test`.
-  """
+  """Reads and enables pagination through a set of `Test`."""
   tests(
-    """
-    Only read the first `n` values of the set.
-    """
+    """Only read the first `n` values of the set."""
     first: Int
 
-    """
-    Only read the last `n` values of the set.
-    """
+    """Only read the last `n` values of the set."""
     last: Int
 
     """
@@ -364,19 +265,13 @@ type User {
     """
     offset: Int
 
-    """
-    Read all values in the set before (above) this cursor.
-    """
+    """Read all values in the set before (above) this cursor."""
     before: Cursor
 
-    """
-    Read all values in the set after (below) this cursor.
-    """
+    """Read all values in the set after (below) this cursor."""
     after: Cursor
 
-    """
-    The method to use when ordering `Test`.
-    """
+    """The method to use when ordering `Test`."""
     orderBy: [TestsOrderBy!] = [PRIMARY_KEY_ASC]
 
     """
@@ -390,23 +285,15 @@ type User {
     filter: TestFilter
   ): TestsConnection!
 
-  """
-  Reads and enables pagination through a set of `Test`.
-  """
+  """Reads and enables pagination through a set of `Test`."""
   testsList(
-    """
-    Only read the first `n` values of the set.
-    """
+    """Only read the first `n` values of the set."""
     first: Int
 
-    """
-    Skip the first `n` values.
-    """
+    """Skip the first `n` values."""
     offset: Int
 
-    """
-    The method to use when ordering `Test`.
-    """
+    """The method to use when ordering `Test`."""
     orderBy: [TestsOrderBy!]
 
     """
@@ -420,18 +307,12 @@ type User {
     filter: TestFilter
   ): [Test!]!
 
-  """
-  Reads and enables pagination through a set of `UserAuthentication`.
-  """
+  """Reads and enables pagination through a set of `UserAuthentication`."""
   userAuthentications(
-    """
-    Only read the first `n` values of the set.
-    """
+    """Only read the first `n` values of the set."""
     first: Int
 
-    """
-    Only read the last `n` values of the set.
-    """
+    """Only read the last `n` values of the set."""
     last: Int
 
     """
@@ -440,19 +321,13 @@ type User {
     """
     offset: Int
 
-    """
-    Read all values in the set before (above) this cursor.
-    """
+    """Read all values in the set before (above) this cursor."""
     before: Cursor
 
-    """
-    Read all values in the set after (below) this cursor.
-    """
+    """Read all values in the set after (below) this cursor."""
     after: Cursor
 
-    """
-    The method to use when ordering `UserAuthentication`.
-    """
+    """The method to use when ordering `UserAuthentication`."""
     orderBy: [UserAuthenticationsOrderBy!] = [PRIMARY_KEY_ASC]
 
     """
@@ -469,16 +344,12 @@ type User {
   hasPassword: Boolean
 }
 
-"""
-User Emails
-"""
+"""User Emails"""
 type UserEmail {
   id: UUID!
   userId: UUID!
 
-  """
-  The users email address, in `a@b.c` format.
-  """
+  """The users email address, in `a@b.c` format."""
   email: String!
 
   """
@@ -489,15 +360,11 @@ type UserEmail {
   createdAt: Datetime!
   updatedAt: Datetime!
 
-  """
-  Reads a single `User` that is related to this `UserEmail`.
-  """
+  """Reads a single `User` that is related to this `UserEmail`."""
   user: User
 }
 
-"""
-Methods to use when ordering `UserEmail`.
-"""
+"""Methods to use when ordering `UserEmail`."""
 enum UserEmailsOrderBy {
   NATURAL
   ID_ASC
@@ -515,19 +382,13 @@ A condition to be used against `UserEmail` object types. All fields are tested
 for equality and combined with a logical ‘and.’
 """
 input UserEmailCondition {
-  """
-  Checks for equality with the object’s `id` field.
-  """
+  """Checks for equality with the object’s `id` field."""
   id: UUID
 
-  """
-  Checks for equality with the object’s `userId` field.
-  """
+  """Checks for equality with the object’s `userId` field."""
   userId: UUID
 
-  """
-  Checks for equality with the object’s `isPrimary` field.
-  """
+  """Checks for equality with the object’s `isPrimary` field."""
   isPrimary: Boolean
 }
 
@@ -535,34 +396,22 @@ input UserEmailCondition {
 A filter to be used against `UserEmail` object types. All fields are combined with a logical ‘and.’
 """
 input UserEmailFilter {
-  """
-  Filter by the object’s `id` field.
-  """
+  """Filter by the object’s `id` field."""
   id: UUIDFilter
 
-  """
-  Filter by the object’s `userId` field.
-  """
+  """Filter by the object’s `userId` field."""
   userId: UUIDFilter
 
-  """
-  Filter by the object’s `isPrimary` field.
-  """
+  """Filter by the object’s `isPrimary` field."""
   isPrimary: BooleanFilter
 
-  """
-  Checks for all expressions in this list.
-  """
+  """Checks for all expressions in this list."""
   and: [UserEmailFilter!]
 
-  """
-  Checks for any expressions in this list.
-  """
+  """Checks for any expressions in this list."""
   or: [UserEmailFilter!]
 
-  """
-  Negates the expression.
-  """
+  """Negates the expression."""
   not: UserEmailFilter
 }
 
@@ -575,14 +424,10 @@ input UUIDFilter {
   """
   isNull: Boolean
 
-  """
-  Equal to the specified value.
-  """
+  """Equal to the specified value."""
   equalTo: UUID
 
-  """
-  Not equal to the specified value.
-  """
+  """Not equal to the specified value."""
   notEqualTo: UUID
 
   """
@@ -590,39 +435,25 @@ input UUIDFilter {
   """
   distinctFrom: UUID
 
-  """
-  Equal to the specified value, treating null like an ordinary value.
-  """
+  """Equal to the specified value, treating null like an ordinary value."""
   notDistinctFrom: UUID
 
-  """
-  Included in the specified list.
-  """
+  """Included in the specified list."""
   in: [UUID!]
 
-  """
-  Not included in the specified list.
-  """
+  """Not included in the specified list."""
   notIn: [UUID!]
 
-  """
-  Less than the specified value.
-  """
+  """Less than the specified value."""
   lessThan: UUID
 
-  """
-  Less than or equal to the specified value.
-  """
+  """Less than or equal to the specified value."""
   lessThanOrEqualTo: UUID
 
-  """
-  Greater than the specified value.
-  """
+  """Greater than the specified value."""
   greaterThan: UUID
 
-  """
-  Greater than or equal to the specified value.
-  """
+  """Greater than or equal to the specified value."""
   greaterThanOrEqualTo: UUID
 }
 
@@ -635,14 +466,10 @@ input BooleanFilter {
   """
   isNull: Boolean
 
-  """
-  Equal to the specified value.
-  """
+  """Equal to the specified value."""
   equalTo: Boolean
 
-  """
-  Not equal to the specified value.
-  """
+  """Not equal to the specified value."""
   notEqualTo: Boolean
 
   """
@@ -650,50 +477,32 @@ input BooleanFilter {
   """
   distinctFrom: Boolean
 
-  """
-  Equal to the specified value, treating null like an ordinary value.
-  """
+  """Equal to the specified value, treating null like an ordinary value."""
   notDistinctFrom: Boolean
 
-  """
-  Included in the specified list.
-  """
+  """Included in the specified list."""
   in: [Boolean!]
 
-  """
-  Not included in the specified list.
-  """
+  """Not included in the specified list."""
   notIn: [Boolean!]
 
-  """
-  Less than the specified value.
-  """
+  """Less than the specified value."""
   lessThan: Boolean
 
-  """
-  Less than or equal to the specified value.
-  """
+  """Less than or equal to the specified value."""
   lessThanOrEqualTo: Boolean
 
-  """
-  Greater than the specified value.
-  """
+  """Greater than the specified value."""
   greaterThan: Boolean
 
-  """
-  Greater than or equal to the specified value.
-  """
+  """Greater than or equal to the specified value."""
   greaterThanOrEqualTo: Boolean
 }
 
-"""
-A location in a connection that can be used for resuming pagination.
-"""
+"""A location in a connection that can be used for resuming pagination."""
 scalar Cursor
 
-"""
-Methods to use when ordering `Test`.
-"""
+"""Methods to use when ordering `Test`."""
 enum TestsOrderBy {
   NATURAL
   ID_ASC
@@ -710,19 +519,13 @@ enum TestsOrderBy {
 A condition to be used against `Test` object types. All fields are tested for equality and combined with a logical ‘and.’
 """
 input TestCondition {
-  """
-  Checks for equality with the object’s `id` field.
-  """
+  """Checks for equality with the object’s `id` field."""
   id: UUID
 
-  """
-  Checks for equality with the object’s `testString` field.
-  """
+  """Checks for equality with the object’s `testString` field."""
   testString: String
 
-  """
-  Checks for equality with the object’s `userId` field.
-  """
+  """Checks for equality with the object’s `userId` field."""
   userId: UUID
 }
 
@@ -730,34 +533,22 @@ input TestCondition {
 A filter to be used against `Test` object types. All fields are combined with a logical ‘and.’
 """
 input TestFilter {
-  """
-  Filter by the object’s `id` field.
-  """
+  """Filter by the object’s `id` field."""
   id: UUIDFilter
 
-  """
-  Filter by the object’s `testString` field.
-  """
+  """Filter by the object’s `testString` field."""
   testString: StringFilter
 
-  """
-  Filter by the object’s `userId` field.
-  """
+  """Filter by the object’s `userId` field."""
   userId: UUIDFilter
 
-  """
-  Checks for all expressions in this list.
-  """
+  """Checks for all expressions in this list."""
   and: [TestFilter!]
 
-  """
-  Checks for any expressions in this list.
-  """
+  """Checks for any expressions in this list."""
   or: [TestFilter!]
 
-  """
-  Negates the expression.
-  """
+  """Negates the expression."""
   not: TestFilter
 }
 
@@ -770,14 +561,10 @@ input StringFilter {
   """
   isNull: Boolean
 
-  """
-  Equal to the specified value.
-  """
+  """Equal to the specified value."""
   equalTo: String
 
-  """
-  Not equal to the specified value.
-  """
+  """Not equal to the specified value."""
   notEqualTo: String
 
   """
@@ -785,99 +572,61 @@ input StringFilter {
   """
   distinctFrom: String
 
-  """
-  Equal to the specified value, treating null like an ordinary value.
-  """
+  """Equal to the specified value, treating null like an ordinary value."""
   notDistinctFrom: String
 
-  """
-  Included in the specified list.
-  """
+  """Included in the specified list."""
   in: [String!]
 
-  """
-  Not included in the specified list.
-  """
+  """Not included in the specified list."""
   notIn: [String!]
 
-  """
-  Less than the specified value.
-  """
+  """Less than the specified value."""
   lessThan: String
 
-  """
-  Less than or equal to the specified value.
-  """
+  """Less than or equal to the specified value."""
   lessThanOrEqualTo: String
 
-  """
-  Greater than the specified value.
-  """
+  """Greater than the specified value."""
   greaterThan: String
 
-  """
-  Greater than or equal to the specified value.
-  """
+  """Greater than or equal to the specified value."""
   greaterThanOrEqualTo: String
 
-  """
-  Contains the specified string (case-sensitive).
-  """
+  """Contains the specified string (case-sensitive)."""
   includes: String
 
-  """
-  Does not contain the specified string (case-sensitive).
-  """
+  """Does not contain the specified string (case-sensitive)."""
   notIncludes: String
 
-  """
-  Contains the specified string (case-insensitive).
-  """
+  """Contains the specified string (case-insensitive)."""
   includesInsensitive: String
 
-  """
-  Does not contain the specified string (case-insensitive).
-  """
+  """Does not contain the specified string (case-insensitive)."""
   notIncludesInsensitive: String
 
-  """
-  Starts with the specified string (case-sensitive).
-  """
+  """Starts with the specified string (case-sensitive)."""
   startsWith: String
 
-  """
-  Does not start with the specified string (case-sensitive).
-  """
+  """Does not start with the specified string (case-sensitive)."""
   notStartsWith: String
 
-  """
-  Starts with the specified string (case-insensitive).
-  """
+  """Starts with the specified string (case-insensitive)."""
   startsWithInsensitive: String
 
-  """
-  Does not start with the specified string (case-insensitive).
-  """
+  """Does not start with the specified string (case-insensitive)."""
   notStartsWithInsensitive: String
 
-  """
-  Ends with the specified string (case-sensitive).
-  """
+  """Ends with the specified string (case-sensitive)."""
   endsWith: String
 
-  """
-  Does not end with the specified string (case-sensitive).
-  """
+  """Does not end with the specified string (case-sensitive)."""
   notEndsWith: String
 
-  """
-  Ends with the specified string (case-insensitive).
-  """
+  """Ends with the specified string (case-insensitive)."""
   endsWithInsensitive: String
 
-  """
-  Does not end with the specified string (case-insensitive).
-  """
+  """Does not end with the specified string (case-insensitive)."""
   notEndsWithInsensitive: String
 
   """
@@ -900,14 +649,10 @@ input StringFilter {
   """
   notLikeInsensitive: String
 
-  """
-  Equal to the specified value (case-insensitive).
-  """
+  """Equal to the specified value (case-insensitive)."""
   equalToInsensitive: String
 
-  """
-  Not equal to the specified value (case-insensitive).
-  """
+  """Not equal to the specified value (case-insensitive)."""
   notEqualToInsensitive: String
 
   """
@@ -920,44 +665,28 @@ input StringFilter {
   """
   notDistinctFromInsensitive: String
 
-  """
-  Included in the specified list (case-insensitive).
-  """
+  """Included in the specified list (case-insensitive)."""
   inInsensitive: [String!]
 
-  """
-  Not included in the specified list (case-insensitive).
-  """
+  """Not included in the specified list (case-insensitive)."""
   notInInsensitive: [String!]
 
-  """
-  Less than the specified value (case-insensitive).
-  """
+  """Less than the specified value (case-insensitive)."""
   lessThanInsensitive: String
 
-  """
-  Less than or equal to the specified value (case-insensitive).
-  """
+  """Less than or equal to the specified value (case-insensitive)."""
   lessThanOrEqualToInsensitive: String
 
-  """
-  Greater than the specified value (case-insensitive).
-  """
+  """Greater than the specified value (case-insensitive)."""
   greaterThanInsensitive: String
 
-  """
-  Greater than or equal to the specified value (case-insensitive).
-  """
+  """Greater than or equal to the specified value (case-insensitive)."""
   greaterThanOrEqualToInsensitive: String
 }
 
-"""
-A connection to a list of `UserAuthentication` values.
-"""
+"""A connection to a list of `UserAuthentication` values."""
 type UserAuthenticationsConnection {
-  """
-  A list of `UserAuthentication` objects.
-  """
+  """A list of `UserAuthentication` objects."""
   nodes: [UserAuthentication!]!
 
   """
@@ -965,9 +694,7 @@ type UserAuthenticationsConnection {
   """
   edges: [UserAuthenticationsEdge!]!
 
-  """
-  Information to aid in pagination.
-  """
+  """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """
@@ -983,26 +710,18 @@ type UserAuthentication {
   id: UUID!
   userId: UUID!
 
-  """
-  The login service used, e.g. `twitter` or `github`.
-  """
+  """The login service used, e.g. `twitter` or `github`."""
   service: String!
 
-  """
-  A unique identifier for the user within the login service.
-  """
+  """A unique identifier for the user within the login service."""
   identifier: String!
 
-  """
-  Additional profile details extracted from this login method
-  """
+  """Additional profile details extracted from this login method"""
   details: JSON!
   createdAt: Datetime!
   updatedAt: Datetime!
 
-  """
-  Reads a single `User` that is related to this `UserAuthentication`.
-  """
+  """Reads a single `User` that is related to this `UserAuthentication`."""
   user: User
 }
 
@@ -1011,49 +730,31 @@ The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://
 """
 scalar JSON
 
-"""
-A `UserAuthentication` edge in the connection.
-"""
+"""A `UserAuthentication` edge in the connection."""
 type UserAuthenticationsEdge {
-  """
-  A cursor for use in pagination.
-  """
+  """A cursor for use in pagination."""
   cursor: Cursor
 
-  """
-  The `UserAuthentication` at the end of the edge.
-  """
+  """The `UserAuthentication` at the end of the edge."""
   node: UserAuthentication!
 }
 
-"""
-Information about pagination in a connection.
-"""
+"""Information about pagination in a connection."""
 type PageInfo {
-  """
-  When paginating forwards, are there more items?
-  """
+  """When paginating forwards, are there more items?"""
   hasNextPage: Boolean!
 
-  """
-  When paginating backwards, are there more items?
-  """
+  """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
-  """
-  When paginating backwards, the cursor to continue.
-  """
+  """When paginating backwards, the cursor to continue."""
   startCursor: Cursor
 
-  """
-  When paginating forwards, the cursor to continue.
-  """
+  """When paginating forwards, the cursor to continue."""
   endCursor: Cursor
 }
 
-"""
-Methods to use when ordering `UserAuthentication`.
-"""
+"""Methods to use when ordering `UserAuthentication`."""
 enum UserAuthenticationsOrderBy {
   NATURAL
   ID_ASC
@@ -1071,19 +772,13 @@ A condition to be used against `UserAuthentication` object types. All fields are
 tested for equality and combined with a logical ‘and.’
 """
 input UserAuthenticationCondition {
-  """
-  Checks for equality with the object’s `id` field.
-  """
+  """Checks for equality with the object’s `id` field."""
   id: UUID
 
-  """
-  Checks for equality with the object’s `userId` field.
-  """
+  """Checks for equality with the object’s `userId` field."""
   userId: UUID
 
-  """
-  Checks for equality with the object’s `service` field.
-  """
+  """Checks for equality with the object’s `service` field."""
   service: String
 }
 
@@ -1091,59 +786,37 @@ input UserAuthenticationCondition {
 A filter to be used against `UserAuthentication` object types. All fields are combined with a logical ‘and.’
 """
 input UserAuthenticationFilter {
-  """
-  Filter by the object’s `id` field.
-  """
+  """Filter by the object’s `id` field."""
   id: UUIDFilter
 
-  """
-  Filter by the object’s `userId` field.
-  """
+  """Filter by the object’s `userId` field."""
   userId: UUIDFilter
 
-  """
-  Filter by the object’s `service` field.
-  """
+  """Filter by the object’s `service` field."""
   service: StringFilter
 
-  """
-  Checks for all expressions in this list.
-  """
+  """Checks for all expressions in this list."""
   and: [UserAuthenticationFilter!]
 
-  """
-  Checks for any expressions in this list.
-  """
+  """Checks for any expressions in this list."""
   or: [UserAuthenticationFilter!]
 
-  """
-  Negates the expression.
-  """
+  """Negates the expression."""
   not: UserAuthenticationFilter
 }
 
-"""
-A `Test` edge in the connection.
-"""
+"""A `Test` edge in the connection."""
 type TestsEdge {
-  """
-  A cursor for use in pagination.
-  """
+  """A cursor for use in pagination."""
   cursor: Cursor
 
-  """
-  The `Test` at the end of the edge.
-  """
+  """The `Test` at the end of the edge."""
   node: Test!
 }
 
-"""
-A connection to a list of `User` values.
-"""
+"""A connection to a list of `User` values."""
 type UsersConnection {
-  """
-  A list of `User` objects.
-  """
+  """A list of `User` objects."""
   nodes: [User!]!
 
   """
@@ -1151,35 +824,23 @@ type UsersConnection {
   """
   edges: [UsersEdge!]!
 
-  """
-  Information to aid in pagination.
-  """
+  """Information to aid in pagination."""
   pageInfo: PageInfo!
 
-  """
-  The count of *all* `User` you could get from the connection.
-  """
+  """The count of *all* `User` you could get from the connection."""
   totalCount: Int!
 }
 
-"""
-A `User` edge in the connection.
-"""
+"""A `User` edge in the connection."""
 type UsersEdge {
-  """
-  A cursor for use in pagination.
-  """
+  """A cursor for use in pagination."""
   cursor: Cursor
 
-  """
-  The `User` at the end of the edge.
-  """
+  """The `User` at the end of the edge."""
   node: User!
 }
 
-"""
-Methods to use when ordering `User`.
-"""
+"""Methods to use when ordering `User`."""
 enum UsersOrderBy {
   NATURAL
   ID_ASC
@@ -1192,9 +853,7 @@ enum UsersOrderBy {
 A condition to be used against `User` object types. All fields are tested for equality and combined with a logical ‘and.’
 """
 input UserCondition {
-  """
-  Checks for equality with the object’s `id` field.
-  """
+  """Checks for equality with the object’s `id` field."""
   id: UUID
 }
 
@@ -1202,34 +861,22 @@ input UserCondition {
 A filter to be used against `User` object types. All fields are combined with a logical ‘and.’
 """
 input UserFilter {
-  """
-  Filter by the object’s `id` field.
-  """
+  """Filter by the object’s `id` field."""
   id: UUIDFilter
 
-  """
-  Filter by the object’s `fullName` field.
-  """
+  """Filter by the object’s `fullName` field."""
   fullName: StringFilter
 
-  """
-  Filter by the object’s `hasPassword` field.
-  """
+  """Filter by the object’s `hasPassword` field."""
   hasPassword: BooleanFilter
 
-  """
-  Checks for all expressions in this list.
-  """
+  """Checks for all expressions in this list."""
   and: [UserFilter!]
 
-  """
-  Checks for any expressions in this list.
-  """
+  """Checks for any expressions in this list."""
   or: [UserFilter!]
 
-  """
-  Negates the expression.
-  """
+  """Negates the expression."""
   not: UserFilter
 }
 
@@ -1248,9 +895,7 @@ input ChuckNorrisJokeCategory {
 The root mutation type which contains root level fields which mutate data.
 """
 type Mutation {
-  """
-  Creates a single `UserAuthentication`.
-  """
+  """Creates a single `UserAuthentication`."""
   createUserAuthentication(
     """
     The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
@@ -1258,9 +903,7 @@ type Mutation {
     input: CreateUserAuthenticationInput!
   ): CreateUserAuthenticationPayload
 
-  """
-  Creates a single `User`.
-  """
+  """Creates a single `User`."""
   createUser(
     """
     The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
@@ -1268,9 +911,7 @@ type Mutation {
     input: CreateUserInput!
   ): CreateUserPayload
 
-  """
-  Updates a single `UserAuthentication` using a unique key and a patch.
-  """
+  """Updates a single `UserAuthentication` using a unique key and a patch."""
   updateUserAuthentication(
     """
     The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
@@ -1278,9 +919,7 @@ type Mutation {
     input: UpdateUserAuthenticationInput!
   ): UpdateUserAuthenticationPayload
 
-  """
-  Updates a single `UserAuthentication` using a unique key and a patch.
-  """
+  """Updates a single `UserAuthentication` using a unique key and a patch."""
   updateUserAuthenticationByServiceAndIdentifier(
     """
     The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
@@ -1288,9 +927,7 @@ type Mutation {
     input: UpdateUserAuthenticationByServiceAndIdentifierInput!
   ): UpdateUserAuthenticationPayload
 
-  """
-  Updates a single `User` using a unique key and a patch.
-  """
+  """Updates a single `User` using a unique key and a patch."""
   updateUser(
     """
     The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
@@ -1298,9 +935,7 @@ type Mutation {
     input: UpdateUserInput!
   ): UpdateUserPayload
 
-  """
-  Deletes a single `UserAuthentication` using a unique key.
-  """
+  """Deletes a single `UserAuthentication` using a unique key."""
   deleteUserAuthentication(
     """
     The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
@@ -1308,9 +943,7 @@ type Mutation {
     input: DeleteUserAuthenticationInput!
   ): DeleteUserAuthenticationPayload
 
-  """
-  Deletes a single `UserAuthentication` using a unique key.
-  """
+  """Deletes a single `UserAuthentication` using a unique key."""
   deleteUserAuthenticationByServiceAndIdentifier(
     """
     The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
@@ -1318,9 +951,7 @@ type Mutation {
     input: DeleteUserAuthenticationByServiceAndIdentifierInput!
   ): DeleteUserAuthenticationPayload
 
-  """
-  Deletes a single `User` using a unique key.
-  """
+  """Deletes a single `User` using a unique key."""
   deleteUser(
     """
     The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
@@ -1344,9 +975,7 @@ type Mutation {
     input: ForgotPasswordInput!
   ): ForgotPasswordPayload
 
-  """
-  Function for debugging.
-  """
+  """Function for debugging."""
   log(
     """
     The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
@@ -1389,9 +1018,7 @@ type Mutation {
   ): AuthenticatePayload
 }
 
-"""
-The output of our create `UserAuthentication` mutation.
-"""
+"""The output of our create `UserAuthentication` mutation."""
 type CreateUserAuthenticationPayload {
   """
   The exact same `clientMutationId` that was provided in the mutation input,
@@ -1399,9 +1026,7 @@ type CreateUserAuthenticationPayload {
   """
   clientMutationId: String
 
-  """
-  The `UserAuthentication` that was created by this mutation.
-  """
+  """The `UserAuthentication` that was created by this mutation."""
   userAuthentication: UserAuthentication
 
   """
@@ -1409,25 +1034,17 @@ type CreateUserAuthenticationPayload {
   """
   query: Query
 
-  """
-  Reads a single `User` that is related to this `UserAuthentication`.
-  """
+  """Reads a single `User` that is related to this `UserAuthentication`."""
   user: User
 
-  """
-  An edge for our `UserAuthentication`. May be used by Relay 1.
-  """
+  """An edge for our `UserAuthentication`. May be used by Relay 1."""
   userAuthenticationEdge(
-    """
-    The method to use when ordering `UserAuthentication`.
-    """
+    """The method to use when ordering `UserAuthentication`."""
     orderBy: [UserAuthenticationsOrderBy!] = [PRIMARY_KEY_ASC]
   ): UserAuthenticationsEdge
 }
 
-"""
-All input for the create `UserAuthentication` mutation.
-"""
+"""All input for the create `UserAuthentication` mutation."""
 input CreateUserAuthenticationInput {
   """
   An arbitrary string value with no semantic meaning. Will be included in the
@@ -1435,40 +1052,28 @@ input CreateUserAuthenticationInput {
   """
   clientMutationId: String
 
-  """
-  The `UserAuthentication` to be created by this mutation.
-  """
+  """The `UserAuthentication` to be created by this mutation."""
   userAuthentication: UserAuthenticationInput!
 }
 
-"""
-An input for mutations affecting `UserAuthentication`
-"""
+"""An input for mutations affecting `UserAuthentication`"""
 input UserAuthenticationInput {
   id: UUID
   userId: UUID!
 
-  """
-  The login service used, e.g. `twitter` or `github`.
-  """
+  """The login service used, e.g. `twitter` or `github`."""
   service: String!
 
-  """
-  A unique identifier for the user within the login service.
-  """
+  """A unique identifier for the user within the login service."""
   identifier: String!
 
-  """
-  Additional profile details extracted from this login method
-  """
+  """Additional profile details extracted from this login method"""
   details: JSON
   createdAt: Datetime
   updatedAt: Datetime
 }
 
-"""
-The output of our create `User` mutation.
-"""
+"""The output of our create `User` mutation."""
 type CreateUserPayload {
   """
   The exact same `clientMutationId` that was provided in the mutation input,
@@ -1476,9 +1081,7 @@ type CreateUserPayload {
   """
   clientMutationId: String
 
-  """
-  The `User` that was created by this mutation.
-  """
+  """The `User` that was created by this mutation."""
   user: User
 
   """
@@ -1486,20 +1089,14 @@ type CreateUserPayload {
   """
   query: Query
 
-  """
-  An edge for our `User`. May be used by Relay 1.
-  """
+  """An edge for our `User`. May be used by Relay 1."""
   userEdge(
-    """
-    The method to use when ordering `User`.
-    """
+    """The method to use when ordering `User`."""
     orderBy: [UsersOrderBy!] = [PRIMARY_KEY_ASC]
   ): UsersEdge
 }
 
-"""
-All input for the create `User` mutation.
-"""
+"""All input for the create `User` mutation."""
 input CreateUserInput {
   """
   An arbitrary string value with no semantic meaning. Will be included in the
@@ -1507,48 +1104,32 @@ input CreateUserInput {
   """
   clientMutationId: String
 
-  """
-  The `User` to be created by this mutation.
-  """
+  """The `User` to be created by this mutation."""
   user: UserInput!
 }
 
-"""
-An input for mutations affecting `User`
-"""
+"""An input for mutations affecting `User`"""
 input UserInput {
-  """
-  Unique identifier for the user.
-  """
+  """Unique identifier for the user."""
   id: UUID
 
-  """
-  Public-facing firstname of the user.
-  """
+  """Public-facing firstname of the user."""
   firstName: String!
 
-  """
-  Public-facing lastname of the user.
-  """
+  """Public-facing lastname of the user."""
   lastName: String!
 
-  """
-  Optional avatar URL.
-  """
+  """Optional avatar URL."""
   avatarUrl: String
 
-  """
-  If true, the user has elevated privileges.
-  """
+  """If true, the user has elevated privileges."""
   isAdmin: Boolean
   isVerified: Boolean
   createdAt: Datetime
   updatedAt: Datetime
 }
 
-"""
-The output of our update `UserAuthentication` mutation.
-"""
+"""The output of our update `UserAuthentication` mutation."""
 type UpdateUserAuthenticationPayload {
   """
   The exact same `clientMutationId` that was provided in the mutation input,
@@ -1556,9 +1137,7 @@ type UpdateUserAuthenticationPayload {
   """
   clientMutationId: String
 
-  """
-  The `UserAuthentication` that was updated by this mutation.
-  """
+  """The `UserAuthentication` that was updated by this mutation."""
   userAuthentication: UserAuthentication
 
   """
@@ -1566,25 +1145,17 @@ type UpdateUserAuthenticationPayload {
   """
   query: Query
 
-  """
-  Reads a single `User` that is related to this `UserAuthentication`.
-  """
+  """Reads a single `User` that is related to this `UserAuthentication`."""
   user: User
 
-  """
-  An edge for our `UserAuthentication`. May be used by Relay 1.
-  """
+  """An edge for our `UserAuthentication`. May be used by Relay 1."""
   userAuthenticationEdge(
-    """
-    The method to use when ordering `UserAuthentication`.
-    """
+    """The method to use when ordering `UserAuthentication`."""
     orderBy: [UserAuthenticationsOrderBy!] = [PRIMARY_KEY_ASC]
   ): UserAuthenticationsEdge
 }
 
-"""
-All input for the `updateUserAuthentication` mutation.
-"""
+"""All input for the `updateUserAuthentication` mutation."""
 input UpdateUserAuthenticationInput {
   """
   An arbitrary string value with no semantic meaning. Will be included in the
@@ -1606,19 +1177,13 @@ input UserAuthenticationPatch {
   id: UUID
   userId: UUID
 
-  """
-  The login service used, e.g. `twitter` or `github`.
-  """
+  """The login service used, e.g. `twitter` or `github`."""
   service: String
 
-  """
-  A unique identifier for the user within the login service.
-  """
+  """A unique identifier for the user within the login service."""
   identifier: String
 
-  """
-  Additional profile details extracted from this login method
-  """
+  """Additional profile details extracted from this login method"""
   details: JSON
   createdAt: Datetime
   updatedAt: Datetime
@@ -1639,20 +1204,14 @@ input UpdateUserAuthenticationByServiceAndIdentifierInput {
   """
   patch: UserAuthenticationPatch!
 
-  """
-  The login service used, e.g. `twitter` or `github`.
-  """
+  """The login service used, e.g. `twitter` or `github`."""
   service: String!
 
-  """
-  A unique identifier for the user within the login service.
-  """
+  """A unique identifier for the user within the login service."""
   identifier: String!
 }
 
-"""
-The output of our update `User` mutation.
-"""
+"""The output of our update `User` mutation."""
 type UpdateUserPayload {
   """
   The exact same `clientMutationId` that was provided in the mutation input,
@@ -1660,9 +1219,7 @@ type UpdateUserPayload {
   """
   clientMutationId: String
 
-  """
-  The `User` that was updated by this mutation.
-  """
+  """The `User` that was updated by this mutation."""
   user: User
 
   """
@@ -1670,20 +1227,14 @@ type UpdateUserPayload {
   """
   query: Query
 
-  """
-  An edge for our `User`. May be used by Relay 1.
-  """
+  """An edge for our `User`. May be used by Relay 1."""
   userEdge(
-    """
-    The method to use when ordering `User`.
-    """
+    """The method to use when ordering `User`."""
     orderBy: [UsersOrderBy!] = [PRIMARY_KEY_ASC]
   ): UsersEdge
 }
 
-"""
-All input for the `updateUser` mutation.
-"""
+"""All input for the `updateUser` mutation."""
 input UpdateUserInput {
   """
   An arbitrary string value with no semantic meaning. Will be included in the
@@ -1696,48 +1247,32 @@ input UpdateUserInput {
   """
   patch: UserPatch!
 
-  """
-  Unique identifier for the user.
-  """
+  """Unique identifier for the user."""
   id: UUID!
 }
 
-"""
-Represents an update to a `User`. Fields that are set will be updated.
-"""
+"""Represents an update to a `User`. Fields that are set will be updated."""
 input UserPatch {
-  """
-  Unique identifier for the user.
-  """
+  """Unique identifier for the user."""
   id: UUID
 
-  """
-  Public-facing firstname of the user.
-  """
+  """Public-facing firstname of the user."""
   firstName: String
 
-  """
-  Public-facing lastname of the user.
-  """
+  """Public-facing lastname of the user."""
   lastName: String
 
-  """
-  Optional avatar URL.
-  """
+  """Optional avatar URL."""
   avatarUrl: String
 
-  """
-  If true, the user has elevated privileges.
-  """
+  """If true, the user has elevated privileges."""
   isAdmin: Boolean
   isVerified: Boolean
   createdAt: Datetime
   updatedAt: Datetime
 }
 
-"""
-The output of our delete `UserAuthentication` mutation.
-"""
+"""The output of our delete `UserAuthentication` mutation."""
 type DeleteUserAuthenticationPayload {
   """
   The exact same `clientMutationId` that was provided in the mutation input,
@@ -1745,9 +1280,7 @@ type DeleteUserAuthenticationPayload {
   """
   clientMutationId: String
 
-  """
-  The `UserAuthentication` that was deleted by this mutation.
-  """
+  """The `UserAuthentication` that was deleted by this mutation."""
   userAuthentication: UserAuthentication
   deletedUserAuthenticationNodeId: ID
 
@@ -1756,25 +1289,17 @@ type DeleteUserAuthenticationPayload {
   """
   query: Query
 
-  """
-  Reads a single `User` that is related to this `UserAuthentication`.
-  """
+  """Reads a single `User` that is related to this `UserAuthentication`."""
   user: User
 
-  """
-  An edge for our `UserAuthentication`. May be used by Relay 1.
-  """
+  """An edge for our `UserAuthentication`. May be used by Relay 1."""
   userAuthenticationEdge(
-    """
-    The method to use when ordering `UserAuthentication`.
-    """
+    """The method to use when ordering `UserAuthentication`."""
     orderBy: [UserAuthenticationsOrderBy!] = [PRIMARY_KEY_ASC]
   ): UserAuthenticationsEdge
 }
 
-"""
-All input for the `deleteUserAuthentication` mutation.
-"""
+"""All input for the `deleteUserAuthentication` mutation."""
 input DeleteUserAuthenticationInput {
   """
   An arbitrary string value with no semantic meaning. Will be included in the
@@ -1794,20 +1319,14 @@ input DeleteUserAuthenticationByServiceAndIdentifierInput {
   """
   clientMutationId: String
 
-  """
-  The login service used, e.g. `twitter` or `github`.
-  """
+  """The login service used, e.g. `twitter` or `github`."""
   service: String!
 
-  """
-  A unique identifier for the user within the login service.
-  """
+  """A unique identifier for the user within the login service."""
   identifier: String!
 }
 
-"""
-The output of our delete `User` mutation.
-"""
+"""The output of our delete `User` mutation."""
 type DeleteUserPayload {
   """
   The exact same `clientMutationId` that was provided in the mutation input,
@@ -1815,9 +1334,7 @@ type DeleteUserPayload {
   """
   clientMutationId: String
 
-  """
-  The `User` that was deleted by this mutation.
-  """
+  """The `User` that was deleted by this mutation."""
   user: User
   deletedUserNodeId: ID
 
@@ -1826,20 +1343,14 @@ type DeleteUserPayload {
   """
   query: Query
 
-  """
-  An edge for our `User`. May be used by Relay 1.
-  """
+  """An edge for our `User`. May be used by Relay 1."""
   userEdge(
-    """
-    The method to use when ordering `User`.
-    """
+    """The method to use when ordering `User`."""
     orderBy: [UsersOrderBy!] = [PRIMARY_KEY_ASC]
   ): UsersEdge
 }
 
-"""
-All input for the `deleteUser` mutation.
-"""
+"""All input for the `deleteUser` mutation."""
 input DeleteUserInput {
   """
   An arbitrary string value with no semantic meaning. Will be included in the
@@ -1847,15 +1358,11 @@ input DeleteUserInput {
   """
   clientMutationId: String
 
-  """
-  Unique identifier for the user.
-  """
+  """Unique identifier for the user."""
   id: UUID!
 }
 
-"""
-The output of our `createTest` mutation.
-"""
+"""The output of our `createTest` mutation."""
 type CreateTestPayload {
   """
   The exact same `clientMutationId` that was provided in the mutation input,
@@ -1869,25 +1376,17 @@ type CreateTestPayload {
   """
   query: Query
 
-  """
-  Reads a single `User` that is related to this `Test`.
-  """
+  """Reads a single `User` that is related to this `Test`."""
   user: User
 
-  """
-  An edge for our `Test`. May be used by Relay 1.
-  """
+  """An edge for our `Test`. May be used by Relay 1."""
   testEdge(
-    """
-    The method to use when ordering `Test`.
-    """
+    """The method to use when ordering `Test`."""
     orderBy: [TestsOrderBy!] = [PRIMARY_KEY_ASC]
   ): TestsEdge
 }
 
-"""
-All input for the `createTest` mutation.
-"""
+"""All input for the `createTest` mutation."""
 input CreateTestInput {
   """
   An arbitrary string value with no semantic meaning. Will be included in the
@@ -1898,9 +1397,7 @@ input CreateTestInput {
   testString: String
 }
 
-"""
-The output of our `forgotPassword` mutation.
-"""
+"""The output of our `forgotPassword` mutation."""
 type ForgotPasswordPayload {
   """
   The exact same `clientMutationId` that was provided in the mutation input,
@@ -1914,9 +1411,7 @@ type ForgotPasswordPayload {
   query: Query
 }
 
-"""
-All input for the `forgotPassword` mutation.
-"""
+"""All input for the `forgotPassword` mutation."""
 input ForgotPasswordInput {
   """
   An arbitrary string value with no semantic meaning. Will be included in the
@@ -1926,9 +1421,7 @@ input ForgotPasswordInput {
   email: String!
 }
 
-"""
-The output of our `log` mutation.
-"""
+"""The output of our `log` mutation."""
 type LogPayload {
   """
   The exact same `clientMutationId` that was provided in the mutation input,
@@ -1942,9 +1435,7 @@ type LogPayload {
   query: Query
 }
 
-"""
-All input for the `log` mutation.
-"""
+"""All input for the `log` mutation."""
 input LogInput {
   """
   An arbitrary string value with no semantic meaning. Will be included in the
@@ -1954,9 +1445,7 @@ input LogInput {
   payload: JSON
 }
 
-"""
-The output of our `registerWithLoginPassword` mutation.
-"""
+"""The output of our `registerWithLoginPassword` mutation."""
 type RegisterWithLoginPasswordPayload {
   """
   The exact same `clientMutationId` that was provided in the mutation input,
@@ -1970,9 +1459,7 @@ type RegisterWithLoginPasswordPayload {
   query: Query
 }
 
-"""
-All input for the `registerWithLoginPassword` mutation.
-"""
+"""All input for the `registerWithLoginPassword` mutation."""
 input RegisterWithLoginPasswordInput {
   """
   An arbitrary string value with no semantic meaning. Will be included in the
@@ -1986,9 +1473,7 @@ input RegisterWithLoginPasswordInput {
   avatarUrl: String
 }
 
-"""
-The output of our `resetPassword` mutation.
-"""
+"""The output of our `resetPassword` mutation."""
 type ResetPasswordPayload {
   """
   The exact same `clientMutationId` that was provided in the mutation input,
@@ -2003,9 +1488,7 @@ type ResetPasswordPayload {
   query: Query
 }
 
-"""
-All input for the `resetPassword` mutation.
-"""
+"""All input for the `resetPassword` mutation."""
 input ResetPasswordInput {
   """
   An arbitrary string value with no semantic meaning. Will be included in the
@@ -2017,9 +1500,7 @@ input ResetPasswordInput {
   newPassword: String!
 }
 
-"""
-The output of our `verifyEmail` mutation.
-"""
+"""The output of our `verifyEmail` mutation."""
 type VerifyEmailPayload {
   """
   The exact same `clientMutationId` that was provided in the mutation input,
@@ -2034,9 +1515,7 @@ type VerifyEmailPayload {
   query: Query
 }
 
-"""
-All input for the `verifyEmail` mutation.
-"""
+"""All input for the `verifyEmail` mutation."""
 input VerifyEmailInput {
   """
   An arbitrary string value with no semantic meaning. Will be included in the
