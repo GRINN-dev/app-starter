@@ -2,7 +2,7 @@ import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { useState } from "react";
 
-let access_token: string = "test";
+let access_token: string = "";
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists

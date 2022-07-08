@@ -4,6 +4,7 @@ import {
   installDatabasePools,
   installCors,
   installCookieJWT,
+  installGoogleSignIn,
 } from "./middlewares";
 import { installVoyager } from "./middlewares/installVoyager";
 
@@ -27,5 +28,6 @@ export const makeApp = () => {
   installDatabasePools(app);
   installPostgraphile(app);
   installVoyager(app);
+  installGoogleSignIn(app);
   return app;
 };
