@@ -8,7 +8,6 @@ import { Express, Response } from "express";
 const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } = process.env;
 export interface Token {
   sub: string;
-  role: string;
   iss?: string;
   exp?: string;
   aud?: string;
@@ -24,15 +23,12 @@ const RefreshTokenPlugin = makeExtendSchemaPlugin(
         access_token: String!
       }
       extend type Mutation {
-        authenticate(
-          input: AuthenticateInput!
-        ): AuthenticatePayload
+        authenticate(input: AuthenticateInput!): AuthenticatePayload
       }
     `,
     resolvers: {
       Mutation: {
         authenticate: async (_, args, context) => {
-       
           const { email, password } = args.input;
           try {
             // Because this is auth, we use rootPgPool, which uses PostGraphile's role
@@ -89,7 +85,6 @@ export const signToken = (
 ) => {
   const token: Token = {
     sub, // the sub, aka 'subscriber id', comes from account.person_id
-    role: "demo_authenticated", // _must_ match the role in SQL as defined by generate_token_plaintext() function
   };
 
   return sign(
@@ -113,8 +108,9 @@ export const signToken = (
 
 export const sendRefreshToken = (res: Response, token: string) => {
   res.cookie("qid", token, {
-    httpOnly: true,
+    //httpOnly: true,
     sameSite: false, // if you're on a single origin, this may help prevent CSRF attacks
-    path: "/refresh_token",
+    path: process.env.NODE_ENV === "production" ? "/refresh_token" : "/",
+    secure: process.env.NODE_ENV === "production",
   });
 };

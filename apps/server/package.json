@@ -27,6 +27,7 @@
     "express": "^4.18.1",
     "google-auth-library": "^8.0.3",
     "graphile-build": "^4.12.2",
+    "graphile-utils": "^4.12.3",
     "graphql": "^15.8.0",
     "graphql-voyager": "^1.0.0-rc.31",
     "postgraphile": "^4.12.9",

@@ -12,6 +12,10 @@
   },
   "devDependencies": {
     "@babel/core": "^7.18.0",
+    "@grinn/config": "*",
+    "@grinn/icons": "*",
+    "@grinn/lib": "*",
+    "@grinn/styles": "*",
     "@storybook/addon-actions": "^6.5.3",
     "@storybook/addon-docs": "^6.5.3",
     "@storybook/addon-essentials": "^6.5.3",
@@ -20,13 +24,9 @@
     "@storybook/manager-webpack5": "^6.5.3",
     "@storybook/react": "^6.5.3",
     "babel-loader": "^8.2.5",
-    "@grinn/icons": "*",
-    "@grinn/lib": "*",
     "next": "^12.1.6",
     "storybook-addon-designs": "^6.2.1",
-    "storybook-addon-next-router": "^3.1.1",
-    "@grinn/styles": "*",
-    "@grinn/config": "*"
+    "storybook-addon-next-router": "^3.1.1"
   },
   "resolutions": {
     "webpack": "^5"
@@ -41,9 +41,10 @@
     "@types/google.accounts": "^0.0.2",
     "concurrently": "^7.2.0",
     "react": "^18.1.0",
-    "react-icons": "^4.3.1",
     "react-circular-progressbar": "^2.0.4",
     "react-d3-speedometer": "^1.0.2",
-    "react-dom": "^18.1.0"
+    "react-dom": "^18.1.0",
+    "react-hook-form": "^7.33.1",
+    "react-icons": "^4.3.1"
   }
 }

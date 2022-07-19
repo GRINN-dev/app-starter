@@ -31,7 +31,6 @@ function MyApp({ Component, pageProps }) {
         setLoading(false);
       });
   }, []);
-
   return (
     <>
       <Head>
