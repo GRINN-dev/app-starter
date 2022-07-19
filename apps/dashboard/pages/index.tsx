@@ -1,9 +1,18 @@
 import { NextPage } from "next";
+import { useEffect } from "react";
 import {
   GoogleLogin,
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
 } from "react-google-login";
+interface User {
+  id: string;
+  name: string;
+}
+
+export interface Window {
+  user?: User;
+}
 
 const Home: NextPage = () => {
   /**
@@ -12,38 +21,37 @@ const Home: NextPage = () => {
    * @param {GoogleLoginResponse | GoogleLoginResponseOffline} response - GoogleLoginResponse |
    * GoogleLoginResponseOffline
    */
-  // const responseGoogle = (
-  //   response: GoogleLoginResponse | GoogleLoginResponseOffline
-  // ) => {
-  //   console.log("res: ", response);
-  // };
+
+  function handleCredentialResponse(response) {
+    console.log("Encoded JWT ID token: " + response.credential);
+    fetch("http://localhost:8000/verify-gsign?token=" + response.credential, {
+      method: "POST",
+    })
+      .then(async res => {
+        const { access_token } = await res.json();
+        console.log("Request complete! response:", access_token);
+      })
+      .catch(err => console.log(err));
+  }
+
+  useEffect(() => {
+    window.onload = function () {
+      google.accounts.id.initialize({
+        client_id:
+          "128517360182-uqnaqd02h6ab6f65uragsmh0j6no516q.apps.googleusercontent.com",
+        callback: handleCredentialResponse,
+      });
+      google.accounts.id.renderButton(
+        document.getElementById("buttonDiv"),
+        { theme: "outline", size: "large" } // customization attributes
+      );
+      google.accounts.id.prompt(); // also display the One Tap dialog
+    };
+  }, []);
 
   return (
     <div>
-      <div
-        id="g_id_onload"
-        data-client_id="128517360182-uqnaqd02h6ab6f65uragsmh0j6no516q.apps.googleusercontent.com"
-        data-login_uri="http://localhost:6785"
-        data-auto_prompt="true"
-        data-callback="handleCredentialResponse"
-      ></div>
-      <div
-        className="g_id_signin"
-        data-type="standard"
-        data-size="large"
-        data-theme="outline"
-        data-text="sign_in_with"
-        data-shape="rectangular"
-        data-logo_alignment="left"
-      ></div>
-      {/* <GoogleLogin
-        clientId="128517360182-uqnaqd02h6ab6f65uragsmh0j6no516q.apps.googleusercontent.com"
-        buttonText="Login"
-        onSuccess={responseGoogle}
-        onFailure={responseGoogle}
-        cookiePolicy={"single_host_origin"}
-        redirectUri="http://localhost:3000/auth"
-      /> */}
+      <div id="buttonDiv"></div>
     </div>
   );
 };

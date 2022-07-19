@@ -4,6 +4,14 @@
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {
     "rootDir": "src",
-    "outDir": "dist"
+    "outDir": "dist",
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/types"
+    ],
+    "types": [
+      "google-one-tap",
+      "google.accounts"
+    ]
   }
 }

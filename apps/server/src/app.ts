@@ -24,7 +24,7 @@ export const makeApp = () => {
     })
   );
   installCors(app);
-  installCookieJWT(app);
+  //installCookieJWT(app);
   installDatabasePools(app);
   installPostgraphile(app);
   installVoyager(app);

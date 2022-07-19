@@ -5,9 +5,7 @@ const { OAuth2Client } = require("google-auth-library");
 const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } = process.env;
 
 
-export const installGoogleSignIn = (app: Express,
-  service: string
-  ) => {
+export const installGoogleSignIn = (app: Express  ) => {
   app.post("/verify-gsign", async (req:Request, res, next) => {
     console.log("🚀 ~ file: installGoogleSignIn.ts ~ line 8 ~ app.post ~ res", res)
     const rootPgPool = app.get("rootPgPool");
@@ -79,6 +77,8 @@ export const installGoogleSignIn = (app: Express,
               REFRESH_TOKEN_SECRET
             )
           );
+          console.log("🚀 ~ file: installGoogleSignIn.ts ~ line 94 ~ verify ~ res", res)
+
           return res.send({
             ok: true,
             access_token: signToken(

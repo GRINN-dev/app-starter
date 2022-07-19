@@ -1,13 +1,20 @@
-import { ApolloProvider } from "@apollo/client";
-import { FC } from "react";
-import { apolloClient } from "./apolloClient";
+import { createContext, FC, SetStateAction, useEffect, useState } from "react";
+import CustomApolloProvider from "./CustomApolloProvider";
+import { Dispatch } from "react";
 
+export const TokenContext = createContext<{
+  accessToken: string;
+  setAccessToken: Dispatch<SetStateAction<string>>;
+}>({
+  accessToken: "",
+  setAccessToken: () => {},
+});
 // apollo provider wrapper
 export const ApolloProviderWrapper: FC<{
   endpoint: string;
   children: React.ReactNode;
 }> = ({ endpoint, children }) => {
   return (
-    <ApolloProvider client={apolloClient(endpoint)}>{children}</ApolloProvider>
+    <CustomApolloProvider endpoint={endpoint}>{children}</CustomApolloProvider>
   );
 };
